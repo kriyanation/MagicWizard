@@ -1,7 +1,7 @@
 import tkinter
 import time
 from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, filedialog, IntVar, Checkbutton
-import sqlite3
+import sqlite3, os
 import datetime
 
 magic_wizard = tkinter.Tk()
@@ -59,14 +59,16 @@ data_collector["Number_Questions"] = 0
 
 
 def add_title_video():
-    filename_vid_title = filedialog.askopenfilename(title='open')
+    filename_vid_title_full = filedialog.askopenfilename(title='open')
+    filename_vid_title = os.path.basename(filename_vid_title_full)
     print(filename_vid_title)
     if (filename_vid_title != ''):
         vid_title_label = Label(title_frame, text=filename_vid_title, pady=10)
         vid_title_label.grid(row=2,column=2)
         data_collector['Title_Video'] = filename_vid_title
 def add_title_image():
-    filename_vid_title = filedialog.askopenfilename(title='open')
+    filename_vid_title_full = filedialog.askopenfilename(title='open')
+    filename_vid_title = os.path.basename(filename_vid_title_full)
     print(filename_vid_title)
     if (filename_vid_title != ''):
         img_title_label = Label(title_frame, text=filename_vid_title, pady=10)
@@ -116,7 +118,8 @@ factual_term_text2 = Entry(factual_frame)
 factual_term_desc_text2 = Text(factual_frame, width=30, height=5)
 
 def  add_factual_image(id):
-    filename_img_title = filedialog.askopenfilename(title='open')
+    filename_img_title_full = filedialog.askopenfilename(title='open')
+    filename_img_title = os.path.basename(filename_img_title_full)
     print(filename_img_title)
     print("ID="+str(id))
     if (filename_img_title != ''):
@@ -245,7 +248,8 @@ def show_steps(selected_string):
 
 
 def add_video(apply_frame):
-    filename_vid = filedialog.askopenfilename(title='open')
+    filename_vid_full = filedialog.askopenfilename(title='open')
+    filename_vid = os.path.basename(filename_vid_full)
     print(filename_vid)
     if (filename_vid != ''):
         vid_label = Label(apply_frame, text=filename_vid, pady=10)
@@ -346,7 +350,8 @@ def add_step(event, index):
 
 
 def add_image(apply_frame, i):
-    filename = filedialog.askopenfilename(title='open')
+    filename_full = filedialog.askopenfilename(title='open')
+    filename = os.path.basename(filename_full)
     print(filename)
     if (filename != ''):
         print("Application_Steps_Widget_"+str(i+1))
