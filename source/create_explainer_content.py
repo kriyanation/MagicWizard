@@ -1,13 +1,22 @@
-import tkinter
+import tkinter,configparser
+from pathlib import Path
 from tkinter import ttk
 
 from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, filedialog, IntVar
 import sqlite3, os
 
+config = configparser.RawConfigParser()
+two_up = Path(__file__).parents[2]
+print(str(two_up) + '/magic.cfg')
+config.read(str(two_up) + '/magic.cfg')
+
+db = config.get("section1", 'dataroot')
+imageroot = config.get("section1", 'image_root')
+videoroot = config.get("section1", 'video_root')
 
 magic_wizard = tkinter.Tk()
-magic_wizard.title("Magic Room Wizard")
-magic_wizard.geometry('500x500')
+magic_wizard.title("Learning Room Wizard")
+magic_wizard.geometry('900x700')
 index = 0
 factual_index = 1
 global factual_button_one
@@ -18,6 +27,8 @@ title_frame.configure(background='beige')
 magic_wizard.configure(background='beige')
 
 s = ttk.Style()
+s.theme_use('clam')
+
 s.configure('Red.TLabelframe', background='beige')
 s.configure('Red.TLabelframe.Label', font=('courier', 14, 'bold', 'italic'))
 s.configure('Red.TLabelframe.Label', foreground='brown')
@@ -73,7 +84,7 @@ data_collector["Number_Questions"] = 0
 
 
 def add_title_video():
-    filename_vid_title_full = filedialog.askopenfilename(title='open')
+    filename_vid_title_full = filedialog.askopenfilename(initialdir=videoroot,title='Select Video')
     filename_vid_title = os.path.basename(filename_vid_title_full)
     print(filename_vid_title)
     if (filename_vid_title != ''):
@@ -81,7 +92,7 @@ def add_title_video():
         vid_title_label.grid(row=2,column=2,pady=2,padx = 2)
         data_collector['Title_Video'] = filename_vid_title
 def add_title_image():
-    filename_vid_title_full = filedialog.askopenfilename(title='open')
+    filename_vid_title_full = filedialog.askopenfilename(initialdir=imageroot,title='Select Image')
     filename_vid_title = os.path.basename(filename_vid_title_full)
     print(filename_vid_title)
     if (filename_vid_title != ''):
@@ -137,7 +148,7 @@ factual_term_text2 = Entry(factual_frame)
 factual_term_desc_text2 = Text(factual_frame, width=30, height=5)
 
 def  add_factual_image(id):
-    filename_img_title_full = filedialog.askopenfilename(title='open')
+    filename_img_title_full = filedialog.askopenfilename(initialdir=imageroot,title='Select Image')
     filename_img_title = os.path.basename(filename_img_title_full)
     print(filename_img_title)
     print("ID="+str(id))
@@ -267,7 +278,7 @@ def show_steps(selected_string):
 
 
 def add_video(apply_frame):
-    filename_vid_full = filedialog.askopenfilename(title='open')
+    filename_vid_full = filedialog.askopenfilename(initialdir=videoroot,title='Select Video')
     filename_vid = os.path.basename(filename_vid_full)
     print(filename_vid)
     if (filename_vid != ''):
@@ -369,7 +380,7 @@ def add_step(event, index):
 
 
 def add_image(apply_frame, i):
-    filename_full = filedialog.askopenfilename(title='open')
+    filename_full = filedialog.askopenfilename(initialdir=imageroot,title='Select Image')
     filename = os.path.basename(filename_full)
     print(filename)
     if (filename != ''):
@@ -448,12 +459,7 @@ def next_page():
 
 
 def save_data():
-
-
-
-
-
-    connection = sqlite3.connect("/home/ram/MagicRoom.db")
+    connection = sqlite3.connect(db)
     cur = connection.cursor()
     sql = ('Insert into Magic_Science_Lessons (Lesson_Type, Lesson_Template, Lesson_Title,Title_Image,Title_Video,Title_Running_Notes,Title_Notes_Language,Factual_Term1,Factual_Term1_Description,Factual_Term2,Factual_Term2_Description,Factual_Term3,Factual_Term3_Description'
            ', Application_Mode,Application_Steps_Number,Application_Step_Description_1,Application_Step_Description_2,Application_Step_Description_3,Application_Step_Description_4,Application_Step_Description_5, Application_Step_Description_6, Application_Step_Description_7, Application_Step_Description_8, Application_Steps_Widget_1'
@@ -467,15 +473,8 @@ def save_data():
            ', :Application_Steps_Widget_7, :Application_Steps_Widget_8, :Answer_Key, :Video_Audio_Assessment_Flag, :Date,:Factual_Image1, :Factual_Image2, :Factual_Image3'
            ', :Application_Video_Link, :Application_Video_Running_Notes, :Questions, :Number_Questions)')
 
-
-
-
-
     cur.execute(sql, data_collector)
     connection.commit()
-
-
-
 
 def previous_page():
     global index
