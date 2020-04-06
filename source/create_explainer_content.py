@@ -6,7 +6,7 @@ from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, fi
 import sqlite3, os
 
 config = configparser.RawConfigParser()
-two_up = Path(__file__).parents[2]
+two_up = Path(__file__).absolute().parents[2]
 print(str(two_up) + '/magic.cfg')
 config.read(str(two_up) + '/magic.cfg')
 
