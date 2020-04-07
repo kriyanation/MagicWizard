@@ -109,7 +109,7 @@ title_image_video_label = ttk.Label(title_frame, text="Video Related to Title", 
 title_video_button = ttk.Button(title_frame, text="Add Video",command=add_title_video,style='Green.TButton')
 title_video_notes_lang = ttk.OptionMenu(title_frame, language_notes,"English", "Hindi", "Kannada", "Tamil",style='Green.TButton')
 title_running_notes_label = ttk.Label(title_frame, text="Running Notes", style='Red.TLabelframe.Label')
-title_running_notes = Text(title_frame, width=30, height=5,pady=2)
+title_running_notes = Text(title_frame,wrap=tkinter.WORD, width=30, height=5,pady=2)
 title_frame.pack()
 title_label.grid(row=0, column=0,pady=5)
 title_text.grid(row=0, column=1,pady=5)
@@ -143,9 +143,9 @@ apply_activity_steps_frame.configure(background='beige')
 create_frame = Frame(magic_wizard)
 create_frame.configure(background='beige')
 factual_term_text1 = Entry(factual_frame)
-factual_term_desc_text1 = Text(factual_frame, width=30, height=5)
+factual_term_desc_text1 = Text(factual_frame,wrap=tkinter.WORD, width=30, height=5)
 factual_term_text2 = Entry(factual_frame)
-factual_term_desc_text2 = Text(factual_frame, width=30, height=5)
+factual_term_desc_text2 = Text(factual_frame, wrap=tkinter.WORD,width=30, height=5)
 
 def  add_factual_image(id):
     filename_img_title_full = filedialog.askopenfilename(initialdir=imageroot,title='Select Image')
@@ -161,7 +161,7 @@ def  add_factual_image(id):
             img_title_label.grid(row=5, column=1,pady=10)
             data_collector['Factual_Image2'] = filename_img_title
         elif id == 2:
-            img_title_label.grid(row=7, column=1,pady=10)
+            img_title_label.grid(row=8, column=1,pady=10)
             data_collector['Factual_Image3'] = filename_img_title
 
 
@@ -171,7 +171,7 @@ def add_factual():
     factual_term_label = ttk.Label(factual_frame, text="Definition or New Term",style='Red.TLabelframe.Label' )
     factual_term_text = Entry(factual_frame)
     factual_term_desc_label = ttk.Label(factual_frame, text="Description",style='Red.TLabelframe.Label')
-    factual_term_desc_text = Text(factual_frame, width=30, height=5)
+    factual_term_desc_text = Text(factual_frame,wrap=tkinter.WORD, width=30, height=5)
     factual_term_image_button = ttk.Button(factual_frame, text='Add Image', command=lambda id=0: add_factual_image(id),style='Green.TButton')
     factual_term_label.grid(row=0, column=0,pady=20)
     factual_term_text.grid(row=0, column=1)
@@ -270,7 +270,7 @@ def show_steps(selected_string):
         video_link_button = ttk.Button(apply_activity_frame, text='Add Video',
                                    command=lambda: add_video(apply_frame),style='Green.TButton')
         video_link_notes_label = ttk.Label(apply_activity_frame, text="Running Notes", style='Red.TLabelframe.Label' )
-        video_link_running_notes = Text(apply_activity_frame, width=30, height=5)
+        video_link_running_notes = Text(apply_activity_frame,wrap=tkinter.WORD, width=30, height=5)
         video_link_label.grid(row=1, column=0,pady=10)
         video_link_button.grid(row=1, column=1)
         video_link_notes_label.grid(row=2, column=0,pady=10)
@@ -392,7 +392,7 @@ def add_image(apply_frame, i):
 var_video_audio = IntVar()
 question_text = Entry(create_frame, width=10)
 create_test_entry = Entry(create_frame, width=20)
-create_question_text = Text(create_frame,width=80,height=40)
+create_question_text = Text(create_frame,wrap=tkinter.WORD,width=80,height=40)
 def add_create_frame():
     create_question_Label = ttk.Label(create_frame, text='Add your questions with options\(Press enter key for new line, recommended multiple choice for machine correction possibility\)',wraplength= 400,style='Red.TLabelframe.Label')
     create_test_label = ttk.Label(create_frame, text='Provide the Answer Key in this format(11, 23, 31,44, 52 - Would mean 1st Q - 11 option is correct, 2ndquestion 3rd option is correct and so on....)',wraplength=400,style='Red.TLabelframe.Label')
