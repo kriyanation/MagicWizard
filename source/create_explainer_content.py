@@ -50,7 +50,7 @@ s.configure('Red.TLabelframe', background='beige')
 s.configure('Red.TLabelframe.Label', font=('courier', 14, 'bold', 'italic'))
 s.configure('Red.TLabelframe.Label', background='beige',foreground='brown')
 
-s.configure('Firebrick.Label',background='beige',foreground='dark blue',font=('courier', 12, 'bold', 'italic'))
+s.configure('Firebrick.Label',background='beige',foreground='dark blue',font=('courier', 9, 'bold'))
 
 s.configure('Green.TButton', background='firebrick', foreground='snow')
 s.configure('Green.TMenubutton', background='peachpuff2', foreground='firebrick')
