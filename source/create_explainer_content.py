@@ -1,6 +1,7 @@
 import tkinter,configparser
 from pathlib import Path
 from tkinter import ttk,messagebox
+from Lesson_File_Manager import LessonFileManager
 
 
 from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, filedialog, IntVar
@@ -13,7 +14,7 @@ two_up = Path(__file__).absolute().parents[2]
 print(str(two_up) + '/magic.cfg')
 try:
     config.read(str(two_up) + '/magic.cfg')
-    db = config.get("section1", 'dataroot')
+    db = config.get("section1", "file_root")+os.path.sep+"MagicRoom.db"
 except configparser.NoSectionError():
     messagebox.showerror("Read Error", "Could not read the config file or the configuration script is incorrect")
     magic_wizard.destroy()
@@ -28,8 +29,8 @@ except(sqlite3.OperationalError):
 else:
     connection.close()
 
-imageroot = config.get("section1", 'image_root')
-videoroot = config.get("section1", 'video_root')
+fileroot = config.get("section1", 'file_root')
+
 
 
 magic_wizard.title("Learning Room Wizard")
@@ -100,10 +101,28 @@ data_collector['Application_Video_Running_Notes'] = ''
 data_collector["Questions"] = ''
 data_collector["Number_Questions"] = 0
 
+filename_vid_title_full= ""
+filename_img_title_full = ""
+
+filename_img_fact1_full= ""
+filename_img_fact2_full = ""
+filename_img_fact3_full = ""
+
+filename_img_app1_full= ""
+filename_img_app2_full = ""
+filename_img_app3_full = ""
+filename_img_app4_full= ""
+filename_img_app5_full = ""
+filename_img_app6_full = ""
+filename_img_app7_full= ""
+filename_img_app8_full = ""
+
+
 
 
 def add_title_video():
-    filename_vid_title_full = filedialog.askopenfilename(initialdir=videoroot,title='Select Video')
+    global filename_vid_title_full
+    filename_vid_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video')
     filename_vid_title = os.path.basename(filename_vid_title_full)
     print(filename_vid_title)
     if (filename_vid_title != ''):
@@ -111,13 +130,14 @@ def add_title_video():
         vid_title_label.grid(row=3,column=2,pady=2,padx = 2)
         data_collector['Title_Video'] = filename_vid_title
 def add_title_image():
-    filename_vid_title_full = filedialog.askopenfilename(initialdir=imageroot,title='Select Image')
-    filename_vid_title = os.path.basename(filename_vid_title_full)
-    print(filename_vid_title)
-    if (filename_vid_title != ''):
-        img_title_label = ttk.Label(title_frame, text=filename_vid_title, style='Red.TLabelframe.Label')
+    global filename_img_title_full
+    filename_img_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
+    filename_img_title = os.path.basename(filename_img_title_full)
+    print(filename_img_title)
+    if (filename_img_title != ''):
+        img_title_label = ttk.Label(title_frame, text=filename_img_title, style='Red.TLabelframe.Label')
         img_title_label.grid(row=2,column=2,pady=2,padx = 2)
-        data_collector['Title_Image'] = filename_vid_title
+        data_collector['Title_Image'] = filename_img_title
 language_notes = StringVar(magic_wizard)
 language_notes.set("English")
 title_doc = ttk.Label(title_frame, text="Welcome to the Learning Wizard. Here you shall be creating your topic introduction page. Add an image and a video which "
@@ -172,21 +192,25 @@ factual_term_text2 = Entry(factual_frame)
 factual_term_desc_text2 = Text(factual_frame, wrap=tkinter.WORD,width=30, height=5)
 
 def  add_factual_image(id):
-    filename_img_title_full = filedialog.askopenfilename(initialdir=imageroot,title='Select Image')
-    filename_img_title = os.path.basename(filename_img_title_full)
-    print(filename_img_title)
+    global filename_img_fact1_full,filename_img_fact2_full,filename_img_fact3_full
+    filename_img_fact_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
+    filename_img_fact = os.path.basename(filename_img_fact_full)
+    print(filename_img_fact)
     print("ID="+str(id))
-    if (filename_img_title != ''):
-        img_title_label = ttk.Label(factual_frame, text=filename_img_title,style='Red.TLabelframe.Label')
+    if (filename_img_fact != ''):
+        img_title_label = ttk.Label(factual_frame, text=filename_img_fact,style='Red.TLabelframe.Label')
         if id == 0:
             img_title_label.grid(row=3, column=1,pady=10)
-            data_collector['Factual_Image1'] = filename_img_title
+            data_collector['Factual_Image1'] = filename_img_fact
+            filename_img_fact1_full = filename_img_fact_full
         elif id == 1:
             img_title_label.grid(row=6, column=1,pady=10)
-            data_collector['Factual_Image2'] = filename_img_title
+            data_collector['Factual_Image2'] = filename_img_fact
+            filename_img_fact2_full = filename_img_fact_full
         elif id == 2:
             img_title_label.grid(row=9, column=1,pady=10)
-            data_collector['Factual_Image3'] = filename_img_title
+            data_collector['Factual_Image3'] = filename_img_fact
+            filename_img_fact3_full = filename_img_fact_full
 
 
 def add_factual():
@@ -258,7 +282,7 @@ def add_factual_two():
 
 def add_apply_frame():
     apply_page_label = ttk.Label(apply_frame,
-              text="Here, you focus on building the skill or showing an application video. If you choose the video option, you can link to a video of a working model or a real world recorded video."
+              text="Here, you focus on building the skill.\n"
                    " You can add relevant context notes for the video for your class to follow \n\n"
                    " In case of Activity option, you are presented with a drawable whiteboard in the player which are connected to a set of steps. Each step allows an image to appear"
                    " in the whiteboard which can be moved around.\n\n An example application can be an experiment which has a set of steps and each step has an image associated with it"
@@ -266,13 +290,14 @@ def add_apply_frame():
                    "  a question and the images can be word or letter clues for the meaning.",
                     wraplength="800", style='Firebrick.Label')
     apply_page_label.grid(row=0, column=0,columnspan=4, pady=10)
-    apply_term_label = ttk.Label(apply_frame, text="How would you want to show the application?",style='Red.TLabelframe.Label' )
-    selected = StringVar(magic_wizard)
-    selected.set('No Selection')
-    apply_dropdown = ttk.OptionMenu(apply_frame, selected, 'No Selection', 'Activity', 'Video', command=show_steps,style='Green.TMenubutton')
-    apply_term_label.grid(row=1, column=0,pady=10)
-    apply_dropdown.grid(row=1, column=1)
-    print(selected.get())
+    # apply_term_label = ttk.Label(apply_frame, text="How would you want to show the application?",style='Red.TLabelframe.Label' )
+    # selected = StringVar(magic_wizard)
+    # selected.set('No Selection')
+    # apply_dropdown = ttk.OptionMenu(apply_frame, selected, 'No Selection', 'Activity', 'Video', command=show_steps,style='Green.TMenubutton')
+    # apply_term_label.grid(row=1, column=0,pady=10)
+    # apply_dropdown.grid(row=1, column=1)
+    # print(selected.get())
+    show_steps('Activity')
 
 
 global video_link_running_notes
@@ -317,7 +342,7 @@ def show_steps(selected_string):
 
 
 def add_video(apply_frame):
-    filename_vid_full = filedialog.askopenfilename(initialdir=videoroot,title='Select Video')
+    filename_vid_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video')
     filename_vid = os.path.basename(filename_vid_full)
     print(filename_vid)
     if (filename_vid != ''):
@@ -414,13 +439,15 @@ def show_individual_steps(selected_number):
 
 def add_step(event, index):
     print("Index:"+str(index)+" Widget:"+event.widget.get())
-
     data_collector["Application_Step_Description"+str(index+1)] = event.widget.get()
 
 
 def add_image(apply_frame, i):
-    filename_full = filedialog.askopenfilename(initialdir=imageroot,title='Select Image')
+    global filename_img_app1_full,filename_img_app2_full,filename_img_app3_full,filename_img_app4_full,filename_img_app5_full,filename_img_app6_full,filename_img_app7_full,filename_img_app8_full
+    filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
     filename = os.path.basename(filename_full)
+    vname = "filename_img_app"+str(i+1)+"_full"
+    globals()[vname] = filename_full
     print(filename)
     if (filename != ''):
         print("Application_Steps_Widget_"+str(i+1))
@@ -502,27 +529,75 @@ def next_page():
 
 
 def save_data():
- try:
-    connection = sqlite3.connect(db)
-    cur = connection.cursor()
-    sql = ('Insert into Magic_Science_Lessons (Lesson_Type, Lesson_Template, Lesson_Title,Title_Image,Title_Video,Title_Running_Notes,Title_Notes_Language,Factual_Term1,Factual_Term1_Description,Factual_Term2,Factual_Term2_Description,Factual_Term3,Factual_Term3_Description'
-           ', Application_Mode,Application_Steps_Number,Application_Step_Description_1,Application_Step_Description_2,Application_Step_Description_3,Application_Step_Description_4,Application_Step_Description_5, Application_Step_Description_6, Application_Step_Description_7, Application_Step_Description_8, Application_Steps_Widget_1'
-           ', Application_Steps_Widget_2, Application_Steps_Widget_3, Application_Steps_Widget_4, Application_Steps_Widget_5, Application_Steps_Widget_6, Application_Steps_Widget_7,Application_Steps_Widget_8,Answer_Key,Video_Audio_Assessment_Flag, Date, Factual_Image1, Factual_Image2, Factual_Image3'
-           ', Application_Video_Link , Application_Video_Running_Notes,IP_Questions,NumberOfQuestions) values( :Lesson_Type, :Lesson_Template, :Lesson_Title, :Title_Image, :Title_Video, :Title_Running_Notes, :Title_Running_Notes_Language, :Factual_Term1'
-           ', :Factual_Term1_Description, :Factual_Term2, :Factual_Term2_Description, :Factual_Term3, :Factual_Term3_Description '
-           ', :Application_Mode, :Application_Steps_Number, :Application_Step_Description1'
-           ', :Application_Step_Description2, :Application_Step_Description3, :Application_Step_Description4, :Application_Step_Description5'
-           ', :Application_Step_Description6, :Application_Step_Description7, :Application_Step_Description8, :Application_Steps_Widget_1'
-           ', :Application_Steps_Widget_2, :Application_Steps_Widget_3, :Application_Steps_Widget_4, :Application_Steps_Widget_5, :Application_Steps_Widget_6'
-           ', :Application_Steps_Widget_7, :Application_Steps_Widget_8, :Answer_Key, :Video_Audio_Assessment_Flag, :Date,:Factual_Image1, :Factual_Image2, :Factual_Image3'
-           ', :Application_Video_Link, :Application_Video_Running_Notes, :Questions, :Number_Questions)')
+    global  filename_img_title_full,filename_img_fact1_full,filename_img_fact2_full, filename_img_fact3_full,filename_img_app1_full, filename_img_app2_full, filename_img_app3_full, filename_img_app4_full, filename_img_app5_full, filename_img_app6_full, filename_img_app7_full, filename_img_app8_full
 
-    cur.execute(sql, data_collector)
-    connection.commit()
- except (sqlite3.OperationalError):
-     messagebox.showerror("Error Connecting to DB","Saving the Information met with an error")
- else:
-     messagebox.showinfo("Content Created","Content created for you to view in the interactive player. \n Revision content generated")
+
+    if data_collector["Title_Image"] == "":
+
+         data_collector["Title_Image"] = "LR_Placeholder.jpeg"
+         filename_img_title_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
+    if data_collector["Factual_Image1"] == "":
+         data_collector["Factual_Image1"] = "LR_Placeholder.jpeg"
+         filename_img_fact1_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
+    if data_collector["Factual_Image2"] == "":
+         data_collector["Factual_Image2"] = "LR_Placeholder.jpeg"
+         filename_img_fact2_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
+
+    if data_collector["Factual_Image3"] == "":
+         data_collector["Factual_Image3"] = "LR_Placeholder.jpeg"
+         filename_img_fact3_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
+
+    lesson_file_manager = LessonFileManager(fileroot)
+    lesson_file_manager.add_image_file(filename_img_title_full)
+
+    if (filename_vid_title_full != ""):
+        lesson_file_manager.add_video_file(filename_vid_title_full)
+
+
+    lesson_file_manager.add_image_file(filename_img_fact1_full)
+    lesson_file_manager.add_image_file(filename_img_fact2_full)
+    lesson_file_manager.add_image_file(filename_img_fact3_full)
+
+
+    if (filename_img_app1_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app1_full)
+    if (filename_img_app2_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app2_full)
+    if (filename_img_app3_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app3_full)
+    if (filename_img_app4_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app4_full)
+    if (filename_img_app5_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app5_full)
+    if (filename_img_app6_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app6_full)
+    if (filename_img_app7_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app7_full)
+    if (filename_img_app8_full != ""):
+        lesson_file_manager.add_image_file(filename_img_app8_full)
+
+
+    try:
+        connection = sqlite3.connect(db)
+        cur = connection.cursor()
+        sql = ('Insert into Magic_Science_Lessons (Lesson_Type, Lesson_Template, Lesson_Title,Title_Image,Title_Video,Title_Running_Notes,Title_Notes_Language,Factual_Term1,Factual_Term1_Description,Factual_Term2,Factual_Term2_Description,Factual_Term3,Factual_Term3_Description'
+               ', Application_Mode,Application_Steps_Number,Application_Step_Description_1,Application_Step_Description_2,Application_Step_Description_3,Application_Step_Description_4,Application_Step_Description_5, Application_Step_Description_6, Application_Step_Description_7, Application_Step_Description_8, Application_Steps_Widget_1'
+               ', Application_Steps_Widget_2, Application_Steps_Widget_3, Application_Steps_Widget_4, Application_Steps_Widget_5, Application_Steps_Widget_6, Application_Steps_Widget_7,Application_Steps_Widget_8,Answer_Key,Video_Audio_Assessment_Flag, Date, Factual_Image1, Factual_Image2, Factual_Image3'
+               ', Application_Video_Link , Application_Video_Running_Notes,IP_Questions,NumberOfQuestions) values( :Lesson_Type, :Lesson_Template, :Lesson_Title, :Title_Image, :Title_Video, :Title_Running_Notes, :Title_Running_Notes_Language, :Factual_Term1'
+               ', :Factual_Term1_Description, :Factual_Term2, :Factual_Term2_Description, :Factual_Term3, :Factual_Term3_Description '
+               ', :Application_Mode, :Application_Steps_Number, :Application_Step_Description1'
+               ', :Application_Step_Description2, :Application_Step_Description3, :Application_Step_Description4, :Application_Step_Description5'
+               ', :Application_Step_Description6, :Application_Step_Description7, :Application_Step_Description8, :Application_Steps_Widget_1'
+               ', :Application_Steps_Widget_2, :Application_Steps_Widget_3, :Application_Steps_Widget_4, :Application_Steps_Widget_5, :Application_Steps_Widget_6'
+               ', :Application_Steps_Widget_7, :Application_Steps_Widget_8, :Answer_Key, :Video_Audio_Assessment_Flag, :Date,:Factual_Image1, :Factual_Image2, :Factual_Image3'
+               ', :Application_Video_Link, :Application_Video_Running_Notes, :Questions, :Number_Questions)')
+
+        cur.execute(sql, data_collector)
+        connection.commit()
+    except (sqlite3.OperationalError):
+         messagebox.showerror("Error Connecting to DB","Saving the Information met with an error")
+    else:
+         messagebox.showinfo("Content Created","Content created for you to view in the interactive player. \n Revision content generated")
 
 
 
