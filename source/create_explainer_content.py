@@ -14,16 +14,8 @@ import sqlite3, os,sys
 
 
 magic_wizard = tkinter.Tk()
-config = configparser.RawConfigParser()
-two_up = Path(__file__).absolute().parents[2]
-print(str(two_up) + '/magic.cfg')
-try:
-    config.read(str(two_up) + '/magic.cfg')
-    db = config.get("section1", "file_root")+os.path.sep+"MagicRoom.db"
-except configparser.NoSectionError():
-    messagebox.showerror("Read Error", "Could not read the config file or the configuration script is incorrect")
-    magic_wizard.destroy()
-    sys.exit()
+fileroot = os.path.abspath(os.path.join(os.getcwd(),".."))
+db = fileroot+os.path.sep+"MagicRoom.db"
 try:
     connection = sqlite3.connect(db)
     cur = connection.cursor()
@@ -34,7 +26,6 @@ except(sqlite3.OperationalError):
 else:
     connection.close()
 
-fileroot = config.get("section1", 'file_root')
 
 
 
