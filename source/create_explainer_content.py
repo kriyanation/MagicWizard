@@ -1,7 +1,12 @@
 import tkinter,configparser
+import traceback
 from pathlib import Path
 from tkinter import ttk,messagebox
+from tkinter import Checkbutton
+import assessment_generate
+
 from Lesson_File_Manager import LessonFileManager
+from snapshot_view import SnapshotView
 
 
 from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, filedialog, IntVar
@@ -121,14 +126,15 @@ filename_img_app8_full = ""
 
 
 def add_title_video():
-    global filename_vid_title_full
+    global filename_vid_title_full,title_image_video_url
     filename_vid_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video')
     filename_vid_title = os.path.basename(filename_vid_title_full)
     print(filename_vid_title)
     if (filename_vid_title != ''):
-        vid_title_label = ttk.Label(title_frame, text=filename_vid_title,style='Red.TLabelframe.Label' )
-        vid_title_label.grid(row=3,column=2,pady=2,padx = 2)
-        data_collector['Title_Video'] = filename_vid_title
+        title_image_video_url.insert(0,filename_vid_title)
+        #vid_title_label = ttk.Label(title_frame, text=filename_vid_title,style='Red.TLabelframe.Label' )
+        #vid_title_label.grid(row=3,column=2,pady=2,padx = 2)
+        data_collector['Title_Video'] = title_image_video_url.get()
 def add_title_image():
     global filename_img_title_full
     filename_img_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
@@ -140,9 +146,9 @@ def add_title_image():
         data_collector['Title_Image'] = filename_img_title
 language_notes = StringVar(magic_wizard)
 language_notes.set("English")
-title_doc = ttk.Label(title_frame, text="Welcome to the Learning Wizard. Here you shall be creating your topic introduction page. Add an image and a video which "
-                                        "you want to start your topic with. Add context to your video. \n\n You can also paste text in any language for giving the context."
-                                        " Another way to use the running notes is to give instructions to students to observe during the video.",
+title_doc = ttk.Label(title_frame, text="Welcome to the Learning Wizard. Here, we shall be creating your topic introduction page. Add an image and a video which "
+                                        "you want to start your topic with.\nWe can also paste text in any language for introducing the topic."
+                                        ,
                                         wraplength="600", style='Firebrick.Label')
 title_label = ttk.Label(title_frame, text="Title of your topic",style='Red.TLabelframe.Label')
 title_text = Entry(title_frame)
@@ -150,8 +156,10 @@ title_image_label = ttk.Label(title_frame, text="Image Related to Title", style=
 title_image_button = ttk.Button(title_frame, text="Add Image",command=add_title_image,style='Green.TButton')
 title_image_video_label = ttk.Label(title_frame, text="Video Related to Title", style='Red.TLabelframe.Label')
 title_video_button = ttk.Button(title_frame, text="Add Video",command=add_title_video,style='Green.TButton')
+title_image_url_label = ttk.Label(title_frame, text="(OR) youtube URL", style='Red.TLabelframe.Label')
+title_image_video_url = ttk.Entry(title_frame)
 title_video_notes_lang = ttk.OptionMenu(title_frame, language_notes,"English", "Hindi", "Kannada", "Tamil",style='Green.TButton')
-title_running_notes_label = ttk.Label(title_frame, text="Running Notes", style='Red.TLabelframe.Label')
+title_running_notes_label = ttk.Label(title_frame, text="Topic Introduction \n(2 to 3 sentences)", style='Red.TLabelframe.Label')
 title_running_notes = Text(title_frame,wrap=tkinter.WORD, width=30, height=5,pady=2)
 title_frame.pack()
 title_doc.grid(row=0, column=0,columnspan =3,pady=10)
@@ -161,9 +169,20 @@ title_image_label.grid(row=2,column=0,pady=2)
 title_image_button.grid(row=2,column=1,pady=2)
 title_image_video_label.grid(row=3,column=0,pady=2)
 title_video_button.grid(row=3,column=1,pady=2)
+
+title_image_url_label.grid(row=3,column=2,pady=2)
+title_image_video_url.grid(row=3,column=3,pady=2,padx=5)
 title_running_notes_label.grid(row=4,column=0,pady=2)
 title_running_notes.grid(row=4,column=1,pady=2)
 #title_video_notes_lang.grid(row=3, column=2,pady=2,padx=2)
+is_link1 = IntVar()
+is_link2 = IntVar()
+is_link3 = IntVar()
+is_link4 = IntVar()
+is_link5 = IntVar()
+is_link6 = IntVar()
+is_link7 = IntVar()
+is_link8 = IntVar()
 
 
 
@@ -216,10 +235,10 @@ def  add_factual_image(id):
 def add_factual():
     global factual_term_text, factual_term_desc_text
     factual_page_label = ttk.Label(factual_frame,
-              text="Here, you cover the facts or the knowledge aspects. You can introduce new terms or concepts. You can also introduce new vocabulary words."
-                   " Each term shall be associated to an image and a short explanation.\n\n We have a limit of 3 at this point in time as we believe for a short lesson "
-                   " for 30 to 45 minutes introducing 3 terms and moving on to application and assessment is sufficient.\n\n If you need to cover more terms or topics we encourage you"
-                   " to create a new lesson. Go ahead and add the definitions and topics !",
+              text="Here, we cover the facts or the knowledge aspects.We can introduce new terms or concepts.We can also introduce new vocabulary words."
+                   "Each term shall be associated to an image and a short explanation.\n\nThree new terms/topcs can be intorduced here as part of one lesson."
+                   "\nIf you need to cover more terms or topics we encourage you"
+                   "to create a new lesson for the same. Let us go ahead and add our content!",
               wraplength="800", style='Firebrick.Label')
     factual_term_label = ttk.Label(factual_frame, text="Definition or New Term",style='Red.TLabelframe.Label' )
     factual_term_text = Entry(factual_frame)
@@ -282,12 +301,12 @@ def add_factual_two():
 
 def add_apply_frame():
     apply_page_label = ttk.Label(apply_frame,
-              text="Here, you focus on building the skill.\n"
-                   " You can add relevant context notes for the video for your class to follow \n\n"
-                   " In case of Activity option, you are presented with a drawable whiteboard in the player which are connected to a set of steps. Each step allows an image to appear"
-                   " in the whiteboard which can be moved around.\n\n An example application can be an experiment which has a set of steps and each step has an image associated with it"
+              text="Here, we focus on building the skill.\n"
+                   
+                   "We describe an activity and is a place of highest interaction.You are presented with a drawable whiteboard in the player which is connected to a set of steps. Each step allows an image to appear"
+                   " in the whiteboard which can be moved around.\nAn example application can be an experiment which has a set of steps and each step has an image associated with it"
                    " another example is an activity in Language subject where each step is a important line from the poem followed by "
-                   "  a question and the images can be word or letter clues for the meaning.",
+                   " a question.The images can be word or letter clues.You can refer to an external link to open related resources for the activity",
                     wraplength="800", style='Firebrick.Label')
     apply_page_label.grid(row=0, column=0,columnspan=4, pady=10)
     # apply_term_label = ttk.Label(apply_frame, text="How would you want to show the application?",style='Red.TLabelframe.Label' )
@@ -350,6 +369,7 @@ def add_video(apply_frame):
         vid_label.grid(row=1, column=2,pady=3)
         data_collector['Application_Video_Link'] = filename_vid
 
+htmlvar = StringVar()
 
 def show_individual_steps(selected_number):
     for widget in apply_activity_steps_frame.winfo_children():
@@ -374,6 +394,8 @@ def show_individual_steps(selected_number):
     step_image_button6 = ttk.Button(apply_activity_steps_frame, text='Add Image',style='Green.TButton')
     step_image_button7 = ttk.Button(apply_activity_steps_frame, text='Add Image',style='Green.TButton')
     step_image_button8 = ttk.Button(apply_activity_steps_frame, text='Add Image',style='Green.TButton')
+    html_link = Entry(apply_activity_steps_frame,textvariable=htmlvar, width=20)
+    link_label = ttk.Label(apply_activity_steps_frame, text="Add an external link", style='Red.TLabelframe.Label')
     i = 1
     for i in range(number_of_steps):
         step_label = ttk.Label(apply_activity_steps_frame, text="Step Description", style='Red.TLabelframe.Label')
@@ -385,6 +407,7 @@ def show_individual_steps(selected_number):
             step_text1.grid(row=i, column=1,padx=5)
             step_image_button1.grid(row=i, column=3)
 
+
         if i == 1:
             index2 = i
             step_text2.bind("<FocusOut>",lambda event, index = i: add_step(event,index2))
@@ -392,6 +415,7 @@ def show_individual_steps(selected_number):
             step_label.grid(row=i, column=0,pady=10,padx=5)
             step_text2.grid(row=i, column=1,padx=5)
             step_image_button2.grid(row=i, column=3)
+
         if i == 2:
             index3 = i
             step_text3.bind("<FocusOut>",lambda event, index = i: add_step(event,index3))
@@ -399,6 +423,7 @@ def show_individual_steps(selected_number):
             step_label.grid(row=i, column=0,pady=10,padx=5)
             step_text3.grid(row=i, column=1)
             step_image_button3.grid(row=i, column=3)
+
         if i == 3:
             index4 = i
             step_text4.bind("<FocusOut>",lambda event, index = i: add_step(event,index4))
@@ -406,6 +431,7 @@ def show_individual_steps(selected_number):
             step_label.grid(row=i, column=0,pady=10,padx=5)
             step_text4.grid(row=i, column=1)
             step_image_button4.grid(row=i, column=3)
+
         if i == 4:
             index5 = i
             step_text5.bind("<FocusOut>",lambda event, index = i: add_step(event,index5))
@@ -413,6 +439,7 @@ def show_individual_steps(selected_number):
             step_label.grid(row=i, column=0,pady=10,padx=5)
             step_text5.grid(row=i, column=1)
             step_image_button5.grid(row=i, column=3)
+
         if i == 5:
             index6 = i
             step_text6.bind("<FocusOut>",lambda event, index = i: add_step(event,index6))
@@ -420,6 +447,7 @@ def show_individual_steps(selected_number):
             step_label.grid(row=i, column=0,pady=10,padx=5)
             step_text6.grid(row=i, column=1)
             step_image_button6.grid(row=i, column=3)
+
         if i == 6:
             index7 = i
             step_text7.bind("<FocusOut>",lambda event, index = i: add_step(event,index7))
@@ -427,6 +455,7 @@ def show_individual_steps(selected_number):
             step_label.grid(row=i, column=0,pady=10,padx=5)
             step_text7.grid(row=i, column=1)
             step_image_button7.grid(row=i, column=3)
+
         if i == 7:
             index8 = i
             step_text8.bind("<FocusOut>", lambda event, index=i: add_step(event, index8))
@@ -434,7 +463,11 @@ def show_individual_steps(selected_number):
             step_label.grid(row=i, column=0,pady=10,padx=5)
             step_text8.grid(row=i, column=1)
             step_image_button8.grid(row=i, column=3)
+
+
         i += 1
+    link_label.grid(row=i,column = 0,pady = 50)
+    html_link.grid(row=i, column=1, pady=50,padx=20)
 
 
 def add_step(event, index):
@@ -460,8 +493,8 @@ question_text = Entry(create_frame, width=10)
 #create_test_entry = Entry(create_frame, width=20)
 create_question_text = Text(create_frame,wrap=tkinter.WORD,width=70,height=40)
 def add_create_frame():
-    create_question_page_Label = ttk.Label(create_frame, text='Here you add your questions. We display it in the player and you can also generate a printable PDF file with '
-                                                              'templates applied. There shall be an option to capture responses through a camera as well', wraplength=600,
+    create_question_page_Label = ttk.Label(create_frame, text='Here we add our questions.These are then displayed in the player and a PDF file for the same is generated.'
+                                                              , wraplength=600,
                                       style='Firebrick.Label')
     create_question_Label = ttk.Label(create_frame, text='Add your questions here',wraplength= 300,style='Red.TLabelframe.Label')
     #create_test_label = ttk.Label(create_frame, text='Provide the Answer Key in this format(11, 23, 31,44, 52 - Would mean 1st Q - 11 option is correct, 2ndquestion 3rd option is correct and so on....)',wraplength=400,style='Red.TLabelframe.Label')
@@ -491,6 +524,7 @@ def next_page():
         data_collector["Application_Mode"] = ''
         data_collector["Title_Running_Notes"] = title_running_notes.get('1.0', tkinter.END)
         data_collector["Title_Running_Notes_Language"] = language_notes.get()
+        data_collector['Title_Video'] = title_image_video_url.get()
         title_frame.pack_forget()
         factual_frame.pack(side='top')
     if index == 2:
@@ -514,6 +548,7 @@ def next_page():
     if index == 3:
         if data_collector['Application_Mode'] =='Video':
             data_collector['Application_Video_Link_Notes'] = video_link_running_notes.get('1.0', 'end')
+        data_collector["Apply_External_Link"] = htmlvar.get()
         apply_frame.pack_forget()
         create_frame.pack()
         next_button.config(text='Submit')
@@ -583,21 +618,37 @@ def save_data():
         sql = ('Insert into Magic_Science_Lessons (Lesson_Type, Lesson_Template, Lesson_Title,Title_Image,Title_Video,Title_Running_Notes,Title_Notes_Language,Factual_Term1,Factual_Term1_Description,Factual_Term2,Factual_Term2_Description,Factual_Term3,Factual_Term3_Description'
                ', Application_Mode,Application_Steps_Number,Application_Step_Description_1,Application_Step_Description_2,Application_Step_Description_3,Application_Step_Description_4,Application_Step_Description_5, Application_Step_Description_6, Application_Step_Description_7, Application_Step_Description_8, Application_Steps_Widget_1'
                ', Application_Steps_Widget_2, Application_Steps_Widget_3, Application_Steps_Widget_4, Application_Steps_Widget_5, Application_Steps_Widget_6, Application_Steps_Widget_7,Application_Steps_Widget_8,Answer_Key,Video_Audio_Assessment_Flag, Date, Factual_Image1, Factual_Image2, Factual_Image3'
-               ', Application_Video_Link , Application_Video_Running_Notes,IP_Questions,NumberOfQuestions) values( :Lesson_Type, :Lesson_Template, :Lesson_Title, :Title_Image, :Title_Video, :Title_Running_Notes, :Title_Running_Notes_Language, :Factual_Term1'
+               ', Application_Video_Link , Application_Video_Running_Notes,IP_Questions,NumberOfQuestions,Apply_External_Link) values( :Lesson_Type, :Lesson_Template, :Lesson_Title, :Title_Image, :Title_Video, :Title_Running_Notes, :Title_Running_Notes_Language, :Factual_Term1'
                ', :Factual_Term1_Description, :Factual_Term2, :Factual_Term2_Description, :Factual_Term3, :Factual_Term3_Description '
                ', :Application_Mode, :Application_Steps_Number, :Application_Step_Description1'
                ', :Application_Step_Description2, :Application_Step_Description3, :Application_Step_Description4, :Application_Step_Description5'
                ', :Application_Step_Description6, :Application_Step_Description7, :Application_Step_Description8, :Application_Steps_Widget_1'
                ', :Application_Steps_Widget_2, :Application_Steps_Widget_3, :Application_Steps_Widget_4, :Application_Steps_Widget_5, :Application_Steps_Widget_6'
                ', :Application_Steps_Widget_7, :Application_Steps_Widget_8, :Answer_Key, :Video_Audio_Assessment_Flag, :Date,:Factual_Image1, :Factual_Image2, :Factual_Image3'
-               ', :Application_Video_Link, :Application_Video_Running_Notes, :Questions, :Number_Questions)')
+               ', :Application_Video_Link, :Application_Video_Running_Notes, :Questions, :Number_Questions, :Apply_External_Link)')
 
         cur.execute(sql, data_collector)
         connection.commit()
     except (sqlite3.OperationalError):
          messagebox.showerror("Error Connecting to DB","Saving the Information met with an error")
     else:
-         messagebox.showinfo("Content Created","Content created for you to view in the interactive player. \n Revision content generated")
+         print("Database content created")
+
+
+
+    try:
+         snapshot = SnapshotView(magic_wizard,lesson_file_manager.new_id,lesson_file_manager.lesson_dir+os.path.sep+"notes_"+str(lesson_file_manager.new_id)+".pdf")
+    except:
+        messagebox.showerror("Notes Generation","There was an error during notes generation")
+        traceback.print_exc()
+    try:
+        assessment = assessment_generate.generate_ip_paper(lesson_file_manager.new_id,lesson_file_manager.lesson_dir+os.path.sep+"ip_"+str(lesson_file_manager.new_id)+".pdf",db)
+    except:
+        messagebox.showerror("Assessment Generation", "There was an error during assessments/points generation")
+        traceback.print_exc()
+    else:
+        messagebox.showinfo("Content Created","Content Created.\nLet us play it in the lesson player from the dashboard.\n\nThe assessment and the notes material is also ready"
+                                               "\nto be shared with our classroom.")
 
 
 

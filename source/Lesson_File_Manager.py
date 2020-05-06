@@ -23,19 +23,23 @@ class LessonFileManager():
         try:
             if not os.path.exists(file_root+os.path.sep+"Lessons"):
                 os.makedirs('Lessons')
-            lesson_dir = file_root + os.pathsep + "Lessons" + os.path.sep + "Lesson" + str(self.new_id)
-            if not os.path.exists(lesson_dir):
+            self.lesson_dir = file_root + os.path.sep + "Lessons" + os.path.sep + "Lesson" + str(self.new_id)
+            if not os.path.exists(self.lesson_dir):
                 os.makedirs(file_root + os.pathsep + "Lessons"+os.path.sep+"Lesson"+str(self.new_id))
 
             self.image_path = file_root + os.path.sep + "Lessons" + os.path.sep + "Lesson" + str(
                 self.new_id) + os.path.sep + "images"
             self.video_path = file_root + os.path.sep + "Lessons" + os.path.sep + "Lesson" + str(
                 self.new_id) + os.path.sep + "videos"
+            self.save_path = file_root + os.path.sep + "Lessons" + os.path.sep + "Lesson" + str(
+                self.new_id) + os.path.sep + "saved_boards"
 
             if not os.path.exists(self.image_path):
                 os.makedirs(self.image_path)
             if not os.path.exists(self.video_path):
                 os.makedirs(self.video_path)
+            if not os.path.exists(self.save_path):
+                os.makedirs(self.save_path)
         except (OSError, IOError):
             print("Directory could not be created")
             sys.exit()
