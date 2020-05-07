@@ -30,7 +30,7 @@ else:
 
 
 magic_wizard.title("Learning Room Wizard")
-magic_wizard.geometry('900x800')
+magic_wizard.geometry('1000x600')
 index = 0
 factual_index = 1
 global factual_button_one
