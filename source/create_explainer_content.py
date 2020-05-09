@@ -4,12 +4,13 @@ from pathlib import Path
 from tkinter import ttk,messagebox
 from tkinter import Checkbutton
 import assessment_generate
+from PIL import Image, ImageTk
 
 from Lesson_File_Manager import LessonFileManager
 from snapshot_view import SnapshotView
 
 
-from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, filedialog, IntVar
+from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, filedialog, IntVar, PhotoImage
 import sqlite3, os,sys
 
 
@@ -96,6 +97,7 @@ data_collector['Application_Video_Link'] = ''
 data_collector['Application_Video_Running_Notes'] = ''
 data_collector["Questions"] = ''
 data_collector["Number_Questions"] = 0
+title_image_display = None
 
 filename_vid_title_full= ""
 filename_img_title_full = ""
@@ -127,12 +129,15 @@ def add_title_video():
         #vid_title_label.grid(row=3,column=2,pady=2,padx = 2)
         data_collector['Title_Video'] = title_image_video_url.get()
 def add_title_image():
-    global filename_img_title_full
+    global filename_img_title_full, title_image_display
     filename_img_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
+    title_image = Image.open(filename_img_title_full)
+    title_image.thumbnail((100,100))
+    title_image_display = ImageTk.PhotoImage(title_image)
     filename_img_title = os.path.basename(filename_img_title_full)
     print(filename_img_title)
     if (filename_img_title != ''):
-        img_title_label = ttk.Label(title_frame, text=filename_img_title, style='Red.TLabelframe.Label')
+        img_title_label = ttk.Label(title_frame, image=title_image_display,background="beige")#style="Red.TLabelframe.Label"
         img_title_label.grid(row=2,column=2,pady=2,padx = 2)
         data_collector['Title_Image'] = filename_img_title
 language_notes = StringVar(magic_wizard)
@@ -140,7 +145,7 @@ language_notes.set("English")
 title_doc = ttk.Label(title_frame, text="Welcome to the Learning Wizard. Here, we shall be creating your topic introduction page. Add an image and a video which "
                                         "you want to start your topic with.\nWe can also paste text in any language for introducing the topic."
                                         ,
-                                        wraplength="600", style='Firebrick.Label')
+                                        wraplength="300", style='Firebrick.Label')
 title_label = ttk.Label(title_frame, text="Title of your topic",style='Red.TLabelframe.Label')
 title_text = Entry(title_frame)
 title_image_label = ttk.Label(title_frame, text="Image Related to Title", style='Red.TLabelframe.Label')
@@ -153,18 +158,18 @@ title_video_notes_lang = ttk.OptionMenu(title_frame, language_notes,"English", "
 title_running_notes_label = ttk.Label(title_frame, text="Topic Introduction \n(2 to 3 sentences)", style='Red.TLabelframe.Label')
 title_running_notes = Text(title_frame,wrap=tkinter.WORD, width=30, height=5,pady=2)
 title_frame.pack()
-title_doc.grid(row=0, column=0,columnspan =3,pady=10)
-title_label.grid(row=1, column=0,pady=50)
-title_text.grid(row=1, column=1,pady=5)
-title_image_label.grid(row=2,column=0,pady=2)
-title_image_button.grid(row=2,column=1,pady=2)
-title_image_video_label.grid(row=3,column=0,pady=2)
-title_video_button.grid(row=3,column=1,pady=2)
+title_doc.grid(row=0, column=0,rowspan=4, pady=10,padx=50)
+title_label.grid(row=1, column=1,pady=50)
+title_text.grid(row=1, column=2,pady=5)
+title_image_label.grid(row=2,column=1,pady=2)
+title_image_button.grid(row=2,column=2,pady=2)
+title_image_video_label.grid(row=3,column=1,pady=2)
+title_video_button.grid(row=3,column=2,pady=2)
 
-title_image_url_label.grid(row=3,column=2,pady=2)
-title_image_video_url.grid(row=3,column=3,pady=2,padx=5)
-title_running_notes_label.grid(row=4,column=0,pady=2)
-title_running_notes.grid(row=4,column=1,pady=2)
+title_image_url_label.grid(row=3,column=3,pady=2)
+title_image_video_url.grid(row=3,column=4,pady=2,padx=5)
+title_running_notes_label.grid(row=4,column=1,pady=2)
+title_running_notes.grid(row=4,column=2,pady=2)
 #title_video_notes_lang.grid(row=3, column=2,pady=2,padx=2)
 is_link1 = IntVar()
 is_link2 = IntVar()
@@ -202,22 +207,33 @@ factual_term_text2 = Entry(factual_frame)
 factual_term_desc_text2 = Text(factual_frame, wrap=tkinter.WORD,width=30, height=5)
 
 def  add_factual_image(id):
-    global filename_img_fact1_full,filename_img_fact2_full,filename_img_fact3_full
+    global filename_img_fact1_full,filename_img_fact2_full,filename_img_fact3_full,factual_image_display1,factual_image_display2,factual_image_display3
     filename_img_fact_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
     filename_img_fact = os.path.basename(filename_img_fact_full)
     print(filename_img_fact)
     print("ID="+str(id))
     if (filename_img_fact != ''):
-        img_title_label = ttk.Label(factual_frame, text=filename_img_fact,style='Red.TLabelframe.Label')
+        factual_image = Image.open(filename_img_fact_full)
+        factual_image.thumbnail((100, 100))
+
+
         if id == 0:
+            factual_image_display1 = ImageTk.PhotoImage(factual_image)
+            img_title_label = ttk.Label(factual_frame, image=factual_image_display1, background="beige")
             img_title_label.grid(row=3, column=1,pady=10)
             data_collector['Factual_Image1'] = filename_img_fact
             filename_img_fact1_full = filename_img_fact_full
         elif id == 1:
+            factual_image_display2 = ImageTk.PhotoImage(factual_image)
+            img_title_label = ttk.Label(factual_frame, image=factual_image_display2, background="beige")
+
             img_title_label.grid(row=6, column=1,pady=10)
             data_collector['Factual_Image2'] = filename_img_fact
             filename_img_fact2_full = filename_img_fact_full
         elif id == 2:
+            factual_image_display3 = ImageTk.PhotoImage(factual_image)
+            img_title_label = ttk.Label(factual_frame, image=factual_image_display3, background="beige")
+
             img_title_label.grid(row=9, column=1,pady=10)
             data_collector['Factual_Image3'] = filename_img_fact
             filename_img_fact3_full = filename_img_fact_full
@@ -227,16 +243,16 @@ def add_factual():
     global factual_term_text, factual_term_desc_text
     factual_page_label = ttk.Label(factual_frame,
               text="Here, we cover the facts or the knowledge aspects.We can introduce new terms or concepts.We can also introduce new vocabulary words."
-                   "Each term shall be associated to an image and a short explanation.\n\nThree new terms/topcs can be intorduced here as part of one lesson."
-                   "\nIf you need to cover more terms or topics we encourage you"
+                   "Each term shall be associated to an image and a short explanation.\n\n\nThree new terms/topcs can be intorduced here as part of one lesson."
+                   "\n\n\nIf you need to cover more terms or topics we encourage you"
                    "to create a new lesson for the same. Let us go ahead and add our content!",
-              wraplength="800", style='Firebrick.Label')
+              wraplength="300", style='Firebrick.Label')
     factual_term_label = ttk.Label(factual_frame, text="Definition or New Term",style='Red.TLabelframe.Label' )
     factual_term_text = Entry(factual_frame)
     factual_term_desc_label = ttk.Label(factual_frame, text="Description",style='Red.TLabelframe.Label')
     factual_term_desc_text = Text(factual_frame,wrap=tkinter.WORD, width=30, height=5)
     factual_term_image_button = ttk.Button(factual_frame, text='Add Image', command=lambda id=0: add_factual_image(id),style='Green.TButton')
-    factual_page_label.grid(row=0, column=0,columnspan=4,pady=10)
+    factual_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200)
     factual_term_label.grid(row=1, column=0,pady=20)
     factual_term_text.grid(row=1, column=1)
     factual_term_desc_label.grid(row=2, column=0)
@@ -298,8 +314,8 @@ def add_apply_frame():
                    " in the whiteboard which can be moved around.\nAn example application can be an experiment which has a set of steps and each step has an image associated with it"
                    " another example is an activity in Language subject where each step is a important line from the poem followed by "
                    " a question.The images can be word or letter clues.You can refer to an external link to open related resources for the activity",
-                    wraplength="800", style='Firebrick.Label')
-    apply_page_label.grid(row=0, column=0,columnspan=4, pady=10)
+                    wraplength="200", style='Firebrick.Label')
+    apply_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200)
     # apply_term_label = ttk.Label(apply_frame, text="How would you want to show the application?",style='Red.TLabelframe.Label' )
     # selected = StringVar(magic_wizard)
     # selected.set('No Selection')
@@ -468,15 +484,21 @@ def add_step(event, index):
 
 def add_image(apply_frame, i):
     global filename_img_app1_full,filename_img_app2_full,filename_img_app3_full,filename_img_app4_full,filename_img_app5_full,filename_img_app6_full,filename_img_app7_full,filename_img_app8_full
+    global apply_image_preview1,apply_image_preview2,apply_image_preview3,apply_image_preview4,apply_image_preview5,apply_image_preview6,apply_image_preview7,apply_image_preview8
     filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
     filename = os.path.basename(filename_full)
     vname = "filename_img_app"+str(i+1)+"_full"
+    vname2 = "apply_image_preview"+str(i+1)
     globals()[vname] = filename_full
+
     print(filename)
     if (filename != ''):
         print("Application_Steps_Widget_"+str(i+1))
+        apply_image = Image.open(globals()[vname])
+        apply_image.thumbnail((60, 60))
+        globals()[vname2]  = ImageTk.PhotoImage(apply_image)
         data_collector["Application_Steps_Widget_"+str(i+1)] = filename
-        step_label = ttk.Label(apply_activity_steps_frame, text=filename,style='Red.TLabelframe.Label')
+        step_label = ttk.Label(apply_activity_steps_frame, image=globals()[vname2],background="beige")
         step_label.grid(row=i , column=4,pady=10)
 
 var_video_audio = IntVar()
