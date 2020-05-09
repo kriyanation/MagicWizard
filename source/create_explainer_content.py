@@ -138,7 +138,7 @@ def add_title_image():
     print(filename_img_title)
     if (filename_img_title != ''):
         img_title_label = ttk.Label(title_frame, image=title_image_display,background="beige")#style="Red.TLabelframe.Label"
-        img_title_label.grid(row=2,column=2,pady=2,padx = 2)
+        img_title_label.grid(row=2,column=3,pady=2,padx = 2)
         data_collector['Title_Image'] = filename_img_title
 language_notes = StringVar(magic_wizard)
 language_notes.set("English")
