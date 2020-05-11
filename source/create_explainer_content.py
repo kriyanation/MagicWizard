@@ -147,7 +147,7 @@ class MagicWizard(tk.Toplevel):
 
     def add_title_video(self):
 
-        self.filename_vid_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video')
+        self.filename_vid_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video',parent=self)
         self.filename_vid_title = os.path.basename(self.filename_vid_title_full)
         print(self.filename_vid_title)
         if (self.filename_vid_title != ''):
@@ -157,7 +157,7 @@ class MagicWizard(tk.Toplevel):
             self.data_collector['Title_Video'] = self.title_image_video_url.get()
     def add_title_image(self):
 
-        self.filename_img_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
+        self.filename_img_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
         self.title_image = Image.open(self.filename_img_title_full)
         self.title_image.thumbnail((100,100))
         self.title_image_display = ImageTk.PhotoImage(self.title_image)
@@ -211,10 +211,11 @@ class MagicWizard(tk.Toplevel):
 
 
     def  add_factual_image(self,id):
-        self.filename_img_fact_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
+        self.filename_img_fact_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
         filename_img_fact = os.path.basename(self.filename_img_fact_full)
         print(filename_img_fact)
         print("ID="+str(id))
+        factual_image = None
         if (filename_img_fact != ''):
             factual_image = Image.open(self.filename_img_fact_full)
             factual_image.thumbnail((100, 100))
@@ -369,7 +370,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_video(self,apply_frame):
-        self.filename_vid_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video')
+        self.filename_vid_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video',parent=self)
         filename_vid = os.path.basename(self.filename_vid_full)
         print(filename_vid)
         if (filename_vid != ''):
@@ -484,7 +485,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_image(self,apply_frame, i):
-        filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image')
+        filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
         filename = os.path.basename(filename_full)
         vname = "filename_img_app"+str(i+1)+"_full"
         vname2 = "apply_image_preview"+str(i+1)
@@ -655,7 +656,7 @@ class MagicWizard(tk.Toplevel):
             traceback.print_exc()
         else:
             messagebox.showinfo("Content Created","Content Created.\nLet us play it in the lesson player from the dashboard.\n\nThe assessment and the notes material is also ready"
-                                                   "\nto be shared with our classroom.")
+                                                   "\nto be shared with our classroom.",parent=self)
 
 
 
