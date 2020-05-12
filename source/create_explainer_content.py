@@ -6,7 +6,7 @@ from tkinter import ttk,messagebox,Toplevel
 import assessment_generate
 from PIL import Image, ImageTk
 
-from Lesson_File_Manager import LessonFileManager
+from Lesson_File_Manager_Create import LessonFileManager
 from snapshot_view import SnapshotView
 
 
@@ -222,21 +222,21 @@ class MagicWizard(tk.Toplevel):
 
 
         if id == 0:
-            factual_image_display1 = ImageTk.PhotoImage(factual_image)
-            img_title_label = ttk.Label(self.factual_frame, image=factual_image_display1, background="beige")
+            self.factual_image_display1 = ImageTk.PhotoImage(factual_image)
+            img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display1, background="beige")
             img_title_label.grid(row=3, column=1,pady=10)
             self.data_collector['Factual_Image1'] = filename_img_fact
             filename_img_fact1_full = self.filename_img_fact_full
         elif id == 1:
-            factual_image_display2 = ImageTk.PhotoImage(factual_image)
-            img_title_label = ttk.Label(self.factual_frame, image=factual_image_display2, background="beige")
+            self.factual_image_display2 = ImageTk.PhotoImage(factual_image)
+            img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display2, background="beige")
 
             img_title_label.grid(row=6, column=1,pady=10)
             self.data_collector['Factual_Image2'] = filename_img_fact
             filename_img_fact2_full = self.filename_img_fact_full
         elif id == 2:
-            factual_image_display3 = ImageTk.PhotoImage(factual_image)
-            img_title_label = ttk.Label(self.factual_frame, image=factual_image_display3, background="beige")
+            self.factual_image_display3 = ImageTk.PhotoImage(factual_image)
+            img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display3, background="beige")
 
             img_title_label.grid(row=9, column=1,pady=10)
             self.data_collector['Factual_Image3'] = filename_img_fact
