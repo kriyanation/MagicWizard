@@ -41,16 +41,16 @@ class MagicWizard(tk.Toplevel):
         s = ttk.Style()
         s.theme_use('clam')
 
-        s.configure('Red.TLabelframe', background='beige')
-        s.configure('Red.TLabelframe.Label', font=('courier', 14, 'bold', 'italic'))
-        s.configure('Red.TLabelframe.Label', background='beige',foreground='brown')
+        s.configure('Create.TLabelframe', background='beige')
+        s.configure('Create.TLabelframe.Label', font=('courier', 14, 'bold', 'italic'))
+        s.configure('Create.TLabelframe.Label', background='beige',foreground='brown')
 
         s.configure('Firebrick.Label',background='beige',foreground='dark blue',font=('courier', 9, 'bold'))
 
-        s.configure('Green.TButton', background='firebrick', foreground='snow')
+        s.configure('Create.TButton', background='firebrick', foreground='snow')
         s.configure('Green.TMenubutton', background='peachpuff2', foreground='firebrick')
         s.configure('Horizontal.Green.TScale', background='firebrick', foreground='snow')
-        s.map('Green.TButton', background=[('active', '!disabled', 'maroon'), ('pressed', 'snow')],
+        s.map('Create.TButton', background=[('active', '!disabled', 'maroon'), ('pressed', 'snow')],
               foreground=[('pressed', 'snow'), ('active', 'snow')])
 
         self.data_collector['Date'] = ''
@@ -127,7 +127,7 @@ class MagicWizard(tk.Toplevel):
         self.factual_term_desc_text1 = Text(self.factual_frame, wrap=tk.WORD, width=30, height=5)
         self.factual_term_text2 = Entry(self.factual_frame)
         self.factual_term_desc_text2 = Text(self.factual_frame, wrap=tk.WORD, width=30, height=5)
-        self.factual_button = ttk.Button(self.factual_frame, text='Add One More', command=self.add_factual_one, style='Green.TButton')
+        self.factual_button = ttk.Button(self.factual_frame, text='Add One More', command=self.add_factual_one, style='Create.TButton')
         self.factual_button.grid(row=4, column=3)
         self.htmlvar = StringVar()
         self.var_video_audio = IntVar()
@@ -138,8 +138,8 @@ class MagicWizard(tk.Toplevel):
         self.add_factual()
         self.add_apply_frame()
         self.add_create_frame()
-        self.next_button = ttk.Button(self.bottom_frame, text='Next', command=self.next_page, style='Green.TButton')
-        self.back_button = ttk.Button(self.bottom_frame, text="Back", command=self.previous_page, style='Green.TButton')
+        self.next_button = ttk.Button(self.bottom_frame, text='Next', command=self.next_page, style='Create.TButton')
+        self.back_button = ttk.Button(self.bottom_frame, text="Back", command=self.previous_page, style='Create.TButton')
 
         self.bottom_frame.pack(side='bottom')
         self.next_button.pack(side='right', padx=5)
@@ -152,7 +152,7 @@ class MagicWizard(tk.Toplevel):
         print(self.filename_vid_title)
         if (self.filename_vid_title != ''):
             self.title_image_video_url.insert(0,self.filename_vid_title)
-            #vid_title_label = ttk.Label(title_frame, text=filename_vid_title,style='Red.TLabelframe.Label' )
+            #vid_title_label = ttk.Label(title_frame, text=filename_vid_title,style='Create.TLabelframe.Label' )
             #vid_title_label.grid(row=3,column=2,pady=2,padx = 2)
             self.data_collector['Title_Video'] = self.title_image_video_url.get()
     def add_title_image(self):
@@ -164,7 +164,7 @@ class MagicWizard(tk.Toplevel):
         self.filename_img_title = os.path.basename(self.filename_img_title_full)
         print(self.filename_img_title)
         if (self.filename_img_title != ''):
-            self.img_title_label = ttk.Label(self.title_frame, image=self.title_image_display,background="beige")#style="Red.TLabelframe.Label"
+            self.img_title_label = ttk.Label(self.title_frame, image=self.title_image_display,background="beige")#style="Create.TLabelframe.Label"
             self.img_title_label.grid(row=2,column=3,pady=2,padx = 2)
             self.data_collector['Title_Image'] = self.filename_img_title
 
@@ -175,16 +175,16 @@ class MagicWizard(tk.Toplevel):
                                                 "you want to start your topic with.\nWe can also paste text in any language for introducing the topic."
                                                 ,
                                                 wraplength="300", style='Firebrick.Label')
-        self.title_label = ttk.Label(self.title_frame, text="Title of your topic",style='Red.TLabelframe.Label')
+        self.title_label = ttk.Label(self.title_frame, text="Title of your topic",style='Create.TLabelframe.Label')
         self.title_text = Entry(self.title_frame)
-        self.title_image_label = ttk.Label(self.title_frame, text="Image Related to Title", style='Red.TLabelframe.Label')
-        self.title_image_button = ttk.Button(self.title_frame, text="Add Image",command=self.add_title_image,style='Green.TButton')
-        self.title_image_video_label = ttk.Label(self.title_frame, text="Video Related to Title", style='Red.TLabelframe.Label')
-        self.title_video_button = ttk.Button(self.title_frame, text="Add Video",command=self.add_title_video,style='Green.TButton')
-        self.title_image_url_label = ttk.Label(self.title_frame, text="(OR) youtube URL", style='Red.TLabelframe.Label')
+        self.title_image_label = ttk.Label(self.title_frame, text="Image Related to Title", style='Create.TLabelframe.Label')
+        self.title_image_button = ttk.Button(self.title_frame, text="Add Image",command=self.add_title_image,style='Create.TButton')
+        self.title_image_video_label = ttk.Label(self.title_frame, text="Video Related to Title", style='Create.TLabelframe.Label')
+        self.title_video_button = ttk.Button(self.title_frame, text="Add Video",command=self.add_title_video,style='Create.TButton')
+        self.title_image_url_label = ttk.Label(self.title_frame, text="(OR) youtube URL", style='Create.TLabelframe.Label')
         self.title_image_video_url = ttk.Entry(self.title_frame)
-        self.title_video_notes_lang = ttk.OptionMenu(self.title_frame, self.language_notes,"English", "Hindi", "Kannada", "Tamil",style='Green.TButton')
-        self.title_running_notes_label = ttk.Label(self.title_frame, text="Topic Introduction \n(2 to 3 sentences)", style='Red.TLabelframe.Label')
+        self.title_video_notes_lang = ttk.OptionMenu(self.title_frame, self.language_notes,"English", "Hindi", "Kannada", "Tamil",style='Create.TButton')
+        self.title_running_notes_label = ttk.Label(self.title_frame, text="Topic Introduction \n(2 to 3 sentences)", style='Create.TLabelframe.Label')
         self.title_running_notes = Text(self.title_frame,wrap=tk.WORD, width=30, height=5,pady=2)
         self.title_frame.pack()
         self.title_doc.grid(row=0, column=0,rowspan=4, pady=10,padx=50)
@@ -251,11 +251,11 @@ class MagicWizard(tk.Toplevel):
                        "\n\n\nIf you need to cover more terms or topics we encourage you"
                        "to create a new lesson for the same. Let us go ahead and add our content!",
                   wraplength="300", style='Firebrick.Label')
-        self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term",style='Red.TLabelframe.Label' )
+        self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term",style='Create.TLabelframe.Label' )
         self.factual_term_text = Entry(self.factual_frame)
-        self.factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Red.TLabelframe.Label')
+        self.factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Create.TLabelframe.Label')
         self.factual_term_desc_text = Text(self.factual_frame,wrap=tk.WORD, width=30, height=5)
-        self.factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=0: self.add_factual_image(id),style='Green.TButton')
+        self.factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=0: self.add_factual_image(id),style='Create.TButton')
         self.factual_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200)
         self.factual_term_label.grid(row=1, column=0,pady=20)
         self.factual_term_text.grid(row=1, column=1)
@@ -267,10 +267,10 @@ class MagicWizard(tk.Toplevel):
     def add_factual_one(self):
 
         self.factual_index += 1
-        self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term",style='Red.TLabelframe.Label')
+        self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term",style='Create.TLabelframe.Label')
 
-        self.factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Red.TLabelframe.Label')
-        self.factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=1: self.add_factual_image(id),style='Green.TButton')
+        self.factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Create.TLabelframe.Label')
+        self.factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=1: self.add_factual_image(id),style='Create.TButton')
 
         self.factual_term_label.grid(row=4, column=0, pady=10)
         self.factual_term_text1.grid(row=4, column=1)
@@ -278,7 +278,7 @@ class MagicWizard(tk.Toplevel):
         self.factual_term_desc_text1.grid(row=5, column=1)
         print(self.factual_index)
         self.factual_button.grid_remove()
-        self.factual_button_one = ttk.Button(self.factual_frame, text='Add One More', command=self.add_factual_two,style='Green.TButton')
+        self.factual_button_one = ttk.Button(self.factual_frame, text='Add One More', command=self.add_factual_two,style='Create.TButton')
         self.factual_button_one.grid(row=6, column=2)
         self.factual_term_image_button.grid(row=6,column=0)
 
@@ -291,10 +291,10 @@ class MagicWizard(tk.Toplevel):
 
         self.factual_index += 1
         self.factual_button_one.grid_remove()
-        self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term", style='Red.TLabelframe.Label')
+        self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term", style='Create.TLabelframe.Label')
 
-        factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Red.TLabelframe.Label')
-        factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=2: self.add_factual_image(id),style='Green.TButton')
+        factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Create.TLabelframe.Label')
+        factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=2: self.add_factual_image(id),style='Create.TButton')
 
         self.rowindex += 3
         print(self.rowindex)
@@ -318,7 +318,7 @@ class MagicWizard(tk.Toplevel):
                        " a question.The images can be word or letter clues.You can refer to an external link to open related resources for the activity",
                         wraplength="200", style='Firebrick.Label')
         self.apply_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200)
-        # apply_term_label = ttk.Label(apply_frame, text="How would you want to show the application?",style='Red.TLabelframe.Label' )
+        # apply_term_label = ttk.Label(apply_frame, text="How would you want to show the application?",style='Create.TLabelframe.Label' )
         # selected = StringVar(magic_wizard)
         # selected.set('No Selection')
         # apply_dropdown = ttk.OptionMenu(apply_frame, selected, 'No Selection', 'Activity', 'Video', command=show_steps,style='Green.TMenubutton')
@@ -338,7 +338,7 @@ class MagicWizard(tk.Toplevel):
                 if widget != self.apply_activity_steps_frame:
                     widget.destroy()
 
-            self.apply_steps_label = ttk.Label(self.apply_activity_frame, text="Number of Steps?", style='Red.TLabelframe.Label')
+            self.apply_steps_label = ttk.Label(self.apply_activity_frame, text="Number of Steps?", style='Create.TLabelframe.Label')
             self.selected_steps = StringVar()
             self.apply_steps_dropdown = ttk.OptionMenu(self.apply_activity_frame, self.selected_steps, '0', '1', '2', '3', '4', '5', '6', '7',
                                               '8',
@@ -358,10 +358,10 @@ class MagicWizard(tk.Toplevel):
             if self.apply_activity_steps_frame is not None and len(self.apply_activity_steps_frame.children) > 1:
                 for widget_steps in self.apply_activity_steps_frame.winfo_children():
                     widget_steps.destroy()
-            self.video_link_label = ttk.Label(self.apply_activity_frame, text="Video Link",style='Red.TLabelframe.Label' )
+            self.video_link_label = ttk.Label(self.apply_activity_frame, text="Video Link",style='Create.TLabelframe.Label' )
             self.video_link_button = ttk.Button(self.apply_activity_frame, text='Add Video',
-                                       command=lambda: self.add_video(self.apply_frame),style='Green.TButton')
-            self.video_link_notes_label = ttk.Label(self.apply_activity_frame, text="Running Notes", style='Red.TLabelframe.Label' )
+                                       command=lambda: self.add_video(self.apply_frame),style='Create.TButton')
+            self.video_link_notes_label = ttk.Label(self.apply_activity_frame, text="Running Notes", style='Create.TLabelframe.Label' )
             self.video_link_running_notes = Text(self.apply_activity_frame,wrap=tk.WORD, width=30, height=5)
             self.video_link_label.grid(row=1, column=0,pady=10)
             self.video_link_button.grid(row=1, column=1)
@@ -374,7 +374,7 @@ class MagicWizard(tk.Toplevel):
         filename_vid = os.path.basename(self.filename_vid_full)
         print(filename_vid)
         if (filename_vid != ''):
-            self.vid_label = ttk.Label(self.apply_activity_frame, text=filename_vid, style='Red.TLabelframe.Label')
+            self.vid_label = ttk.Label(self.apply_activity_frame, text=filename_vid, style='Create.TLabelframe.Label')
             self.vid_label.grid(row=1, column=2,pady=3)
             self.data_collector['Application_Video_Link'] = filename_vid
 
@@ -395,19 +395,19 @@ class MagicWizard(tk.Toplevel):
         self.step_text6 = Entry(self.apply_activity_steps_frame)
         self.step_text7 = Entry(self.apply_activity_steps_frame)
         self.step_text8 = Entry(self.apply_activity_steps_frame)
-        self.step_image_button1 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
-        self.step_image_button2 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
-        self.step_image_button3 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
-        self.step_image_button4 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
-        self.step_image_button5 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
-        self.step_image_button6 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
-        self.step_image_button7 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
-        self.step_image_button8 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Green.TButton')
+        self.step_image_button1 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
+        self.step_image_button2 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
+        self.step_image_button3 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
+        self.step_image_button4 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
+        self.step_image_button5 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
+        self.step_image_button6 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
+        self.step_image_button7 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
+        self.step_image_button8 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
         self.html_link = Entry(self.apply_activity_steps_frame,textvariable=self.htmlvar, width=20)
-        self.link_label = ttk.Label(self.apply_activity_steps_frame, text="Add an external link", style='Red.TLabelframe.Label')
+        self.link_label = ttk.Label(self.apply_activity_steps_frame, text="Add an external link", style='Create.TLabelframe.Label')
         i = 1
         for i in range(self.number_of_steps):
-            self.step_label = ttk.Label(self.apply_activity_steps_frame, text="Step Description", style='Red.TLabelframe.Label')
+            self.step_label = ttk.Label(self.apply_activity_steps_frame, text="Step Description", style='Create.TLabelframe.Label')
             if i == 0:
                 index1 = i
                 self.step_text1.bind("<FocusOut>",lambda event, index = i: self.add_step(event,index1))
@@ -506,10 +506,10 @@ class MagicWizard(tk.Toplevel):
         self.create_question_page_Label = ttk.Label(self.create_frame, text='Here we add our questions.These are then displayed in the player and a PDF file for the same is generated.'
                                                                   , wraplength=600,
                                           style='Firebrick.Label')
-        self.create_question_Label = ttk.Label(self.create_frame, text='Add your questions here',wraplength= 300,style='Red.TLabelframe.Label')
-        #create_test_label = ttk.Label(create_frame, text='Provide the Answer Key in this format(11, 23, 31,44, 52 - Would mean 1st Q - 11 option is correct, 2ndquestion 3rd option is correct and so on....)',wraplength=400,style='Red.TLabelframe.Label')
+        self.create_question_Label = ttk.Label(self.create_frame, text='Add your questions here',wraplength= 300,style='Create.TLabelframe.Label')
+        #create_test_label = ttk.Label(create_frame, text='Provide the Answer Key in this format(11, 23, 31,44, 52 - Would mean 1st Q - 11 option is correct, 2ndquestion 3rd option is correct and so on....)',wraplength=400,style='Create.TLabelframe.Label')
 
-        #question_label = ttk.Label(create_frame, text='Total Number of questions?',style='Red.TLabelframe.Label')
+        #question_label = ttk.Label(create_frame, text='Total Number of questions?',style='Create.TLabelframe.Label')
 
 
         #create_test_label.grid(row=0, column=0)
