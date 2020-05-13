@@ -226,14 +226,14 @@ class MagicWizard(tk.Toplevel):
             img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display1, background="beige")
             img_title_label.grid(row=3, column=1,pady=10)
             self.data_collector['Factual_Image1'] = filename_img_fact
-            filename_img_fact1_full = self.filename_img_fact_full
+            self.filename_img_fact1_full = self.filename_img_fact_full
         elif id == 1:
             self.factual_image_display2 = ImageTk.PhotoImage(factual_image)
             img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display2, background="beige")
 
             img_title_label.grid(row=6, column=1,pady=10)
             self.data_collector['Factual_Image2'] = filename_img_fact
-            filename_img_fact2_full = self.filename_img_fact_full
+            self.filename_img_fact2_full = self.filename_img_fact_full
         elif id == 2:
             self.factual_image_display3 = ImageTk.PhotoImage(factual_image)
             img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display3, background="beige")
@@ -484,22 +484,126 @@ class MagicWizard(tk.Toplevel):
         self.data_collector["Application_Step_Description"+str(index+1)] = event.widget.get()
 
 
-    def add_image(self,apply_frame, i):
-        filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
-        filename = os.path.basename(filename_full)
-        vname = "filename_img_app"+str(i+1)+"_full"
-        vname2 = "apply_image_preview"+str(i+1)
-        globals()[vname] = filename_full
+    def add_image(self,apply_frame, index):
+        if index == 0:
 
-        print(filename)
-        if (filename != ''):
-            print("Application_Steps_Widget_"+str(i+1))
-            apply_image = Image.open(globals()[vname])
-            apply_image.thumbnail((60, 60))
-            globals()[vname2]  = ImageTk.PhotoImage(apply_image)
-            self.data_collector["Application_Steps_Widget_"+str(i+1)] = filename
-            step_label = ttk.Label(self.apply_activity_steps_frame, image=globals()[vname2],background="beige")
-            step_label.grid(row=i , column=4,pady=10)
+            filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app1_full = filename_full
+
+
+            try:
+                apply_image = Image.open(self.filename_img_app1_full )
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview1 = ImageTk.PhotoImage(apply_image)
+                self.step1_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview1,
+                                             )
+                self.step1_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+
+        elif index == 1:
+            filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app2_full = filename_full
+
+            try:
+                apply_image = Image.open(self.filename_img_app2_full)
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview2 = ImageTk.PhotoImage(apply_image)
+                self.step2_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview2,
+                                             )
+                self.step2_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+        elif index == 2:
+            filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app3_full = filename_full
+
+
+            try:
+                apply_image = Image.open(self.filename_img_app3_full )
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview3 = ImageTk.PhotoImage(apply_image)
+                self.step3_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview3,
+                                             )
+                self.step3_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+        elif index == 3:
+            filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app4_full = filename_full
+
+            try:
+                apply_image = Image.open(self.filename_img_app4_full)
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview4 = ImageTk.PhotoImage(apply_image)
+                self.step4_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview4,
+                                             )
+                self.step4_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+        elif index == 4:
+            filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app5_full = filename_full
+
+
+            try:
+                apply_image = Image.open(self.filename_img_app5_full )
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview5 = ImageTk.PhotoImage(apply_image)
+                self.step5_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview5,
+                                             )
+                self.step5_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+        elif index == 5:
+            filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app6_full = filename_full
+
+            try:
+                apply_image = Image.open(self.filename_img_app6_full)
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview6 = ImageTk.PhotoImage(apply_image)
+                self.step6_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview6,
+                                             )
+                self.step6_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+        elif index == 6:
+            filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app7_full = filename_full
+
+            try:
+                apply_image = Image.open(self.filename_img_app7_full)
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview7 = ImageTk.PhotoImage(apply_image)
+                self.step7_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview7,
+                                             )
+                self.step7_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+        elif index == 7:
+            filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
+            filename = os.path.basename(filename_full)
+            self.filename_img_app8_full = filename_full
+
+            try:
+                apply_image = Image.open(self.filename_img_app8_full)
+                apply_image.thumbnail((100, 100))
+                self.apply_image_preview8 = ImageTk.PhotoImage(apply_image)
+                self.step8_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview8,
+                                             )
+                self.step1_label.grid(row=index, column=4, padx=20, pady=10)
+            except:
+                print("invalid image")
+
+
 
 
     def add_create_frame(self):
@@ -584,7 +688,7 @@ class MagicWizard(tk.Toplevel):
              self.filename_img_fact1_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
         if self.data_collector["Factual_Image2"] == "":
              self.data_collector["Factual_Image2"] = "LR_Placeholder.jpeg"
-             filename_img_fact2_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
+             self.filename_img_fact2_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
 
         if self.data_collector["Factual_Image3"] == "":
              self.data_collector["Factual_Image3"] = "LR_Placeholder.jpeg"
@@ -597,9 +701,9 @@ class MagicWizard(tk.Toplevel):
             self.lesson_file_manager.add_video_file(self.filename_vid_title_full)
 
 
-            self.lesson_file_manager.add_image_file(self.filename_img_fact1_full)
-            self.lesson_file_manager.add_image_file(self.filename_img_fact2_full)
-            self.lesson_file_manager.add_image_file(self.filename_img_fact3_full)
+        self.lesson_file_manager.add_image_file(self.filename_img_fact1_full)
+        self.lesson_file_manager.add_image_file(self.filename_img_fact2_full)
+        self.lesson_file_manager.add_image_file(self.filename_img_fact3_full)
 
 
         if (self.filename_img_app1_full != ""):
