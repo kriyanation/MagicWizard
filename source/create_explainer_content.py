@@ -218,7 +218,7 @@ class MagicWizard(tk.Toplevel):
         factual_image = None
         if (filename_img_fact != ''):
             factual_image = Image.open(self.filename_img_fact_full)
-            factual_image.thumbnail((100, 100))
+            factual_image.thumbnail((80, 80))
 
 
         if id == 0:
@@ -490,11 +490,11 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app1_full = filename_full
-
+            self.data_collector['Application_Steps_Widget_1'] = filename
 
             try:
                 apply_image = Image.open(self.filename_img_app1_full )
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview1 = ImageTk.PhotoImage(apply_image)
                 self.step1_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview1,
                                              )
@@ -506,10 +506,10 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app2_full = filename_full
-
+            self.data_collector['Application_Steps_Widget_2'] = filename
             try:
                 apply_image = Image.open(self.filename_img_app2_full)
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview2 = ImageTk.PhotoImage(apply_image)
                 self.step2_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview2,
                                              )
@@ -520,11 +520,11 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app3_full = filename_full
-
+            self.data_collector['Application_Steps_Widget_3'] = filename
 
             try:
                 apply_image = Image.open(self.filename_img_app3_full )
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview3 = ImageTk.PhotoImage(apply_image)
                 self.step3_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview3,
                                              )
@@ -535,10 +535,11 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app4_full = filename_full
+            self.data_collector['Application_Steps_Widget_4'] = filename
 
             try:
                 apply_image = Image.open(self.filename_img_app4_full)
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview4 = ImageTk.PhotoImage(apply_image)
                 self.step4_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview4,
                                              )
@@ -549,11 +550,12 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app5_full = filename_full
+            self.data_collector['Application_Steps_Widget_5'] = filename
 
 
             try:
                 apply_image = Image.open(self.filename_img_app5_full )
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview5 = ImageTk.PhotoImage(apply_image)
                 self.step5_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview5,
                                              )
@@ -564,10 +566,11 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app6_full = filename_full
+            self.data_collector['Application_Steps_Widget_6'] = filename
 
             try:
                 apply_image = Image.open(self.filename_img_app6_full)
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview6 = ImageTk.PhotoImage(apply_image)
                 self.step6_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview6,
                                              )
@@ -578,10 +581,11 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app7_full = filename_full
+            self.data_collector['Application_Steps_Widget_7'] = filename
 
             try:
                 apply_image = Image.open(self.filename_img_app7_full)
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview7 = ImageTk.PhotoImage(apply_image)
                 self.step7_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview7,
                                              )
@@ -592,10 +596,11 @@ class MagicWizard(tk.Toplevel):
             filename_full = filedialog.askopenfilename(initialdir=fileroot, title='Select Image', parent=self)
             filename = os.path.basename(filename_full)
             self.filename_img_app8_full = filename_full
+            self.data_collector['Application_Steps_Widget_8'] = filename
 
             try:
                 apply_image = Image.open(self.filename_img_app8_full)
-                apply_image.thumbnail((100, 100))
+                apply_image.thumbnail((60, 60))
                 self.apply_image_preview8 = ImageTk.PhotoImage(apply_image)
                 self.step8_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview8,
                                              )

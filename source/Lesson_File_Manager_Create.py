@@ -27,7 +27,7 @@ class LessonFileManager():
                 os.makedirs('Lessons')
             self.lesson_dir = file_root + os.path.sep + "Lessons" + os.path.sep + "Lesson" + str(self.new_id)
             if not os.path.exists(self.lesson_dir):
-                os.makedirs(file_root + os.pathsep + "Lessons"+os.path.sep+"Lesson"+str(self.new_id))
+                os.makedirs(file_root + os.path.sep + "Lessons"+os.path.sep+"Lesson"+str(self.new_id))
 
             self.image_path = file_root + os.path.sep + "Lessons" + os.path.sep + "Lesson" + str(
                 self.new_id) + os.path.sep + "images"
