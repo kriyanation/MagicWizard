@@ -331,7 +331,14 @@ class MagicWizard(tk.Toplevel):
 
 
     def show_steps(self,selected_string):
-
+        self.step1_text_var = StringVar()
+        self.step2_text_var = StringVar()
+        self.step3_text_var = StringVar()
+        self.step4_text_var = StringVar()
+        self.step5_text_var = StringVar()
+        self.step6_text_var = StringVar()
+        self.step7_text_var = StringVar()
+        self.step8_text_var = StringVar()
         if selected_string == 'Activity':
             self.data_collector['Application_Mode'] = selected_string
             for widget in self.apply_activity_frame.winfo_children():
@@ -387,14 +394,38 @@ class MagicWizard(tk.Toplevel):
         self.number_of_steps = int(selected_number)
 
         i = 0
-        self.step_text1 = Entry(self.apply_activity_steps_frame)
-        self.step_text2 = Entry(self.apply_activity_steps_frame)
-        self.step_text3 = Entry(self.apply_activity_steps_frame)
-        self.step_text4 = Entry(self.apply_activity_steps_frame)
-        self.step_text5 = Entry(self.apply_activity_steps_frame)
-        self.step_text6 = Entry(self.apply_activity_steps_frame)
-        self.step_text7 = Entry(self.apply_activity_steps_frame)
-        self.step_text8 = Entry(self.apply_activity_steps_frame)
+        self.step1_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+        self.step2_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+        self.step3_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+        self.step4_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+        self.step5_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+        self.step6_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+        self.step7_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+        self.step8_label = ttk.Label(self.apply_activity_steps_frame
+                                     )
+
+        self.step_text1 = Entry(self.apply_activity_steps_frame,textvariable=self.step1_text_var)
+
+        self.step_text2 = Entry(self.apply_activity_steps_frame,textvariable=self.step2_text_var)
+
+        self.step_text3 = Entry(self.apply_activity_steps_frame,textvariable=self.step3_text_var)
+
+        self.step_text4 = Entry(self.apply_activity_steps_frame,textvariable=self.step4_text_var)
+
+        self.step_text5 = Entry(self.apply_activity_steps_frame,textvariable=self.step5_text_var)
+
+        self.step_text6 = Entry(self.apply_activity_steps_frame,textvariable=self.step6_text_var)
+
+        self.step_text7 = Entry(self.apply_activity_steps_frame,textvariable=self.step7_text_var)
+
+        self.step_text8 = Entry(self.apply_activity_steps_frame,textvariable=self.step8_text_var)
         self.step_image_button1 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
         self.step_image_button2 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
         self.step_image_button3 = ttk.Button(self.apply_activity_steps_frame, text='Add Image',style='Create.TButton')
@@ -415,7 +446,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text1.grid(row=i, column=1,padx=5)
                 self.step_image_button1.grid(row=i, column=3)
-
+                if hasattr(self,"apply_image_preview1") and self.apply_image_preview1 is not None:
+                    self.step1_label.configure(image=self.apply_image_preview1)
+                    self.step1_label.grid(row=i, column=4, padx=20, pady=10)
 
             if i == 1:
                 index2 = i
@@ -424,6 +457,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text2.grid(row=i, column=1,padx=5)
                 self.step_image_button2.grid(row=i, column=3)
+                if hasattr(self, "apply_image_preview2") and self.apply_image_preview2 is not None:
+                    self.step2_label.configure(image=self.apply_image_preview2)
+                    self.step2_label.grid(row=i, column=4, padx=20, pady=10)
 
             if i == 2:
                 index3 = i
@@ -432,6 +468,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text3.grid(row=i, column=1)
                 self.step_image_button3.grid(row=i, column=3)
+                if hasattr(self, "apply_image_preview3") and self.apply_image_preview3 is not None:
+                    self.step3_label.configure(image=self.apply_image_preview3)
+                    self.step3_label.grid(row=i, column=4, padx=20, pady=10)
 
             if i == 3:
                 index4 = i
@@ -440,6 +479,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text4.grid(row=i, column=1)
                 self.step_image_button4.grid(row=i, column=3)
+                if hasattr(self, "apply_image_preview4") and self.apply_image_preview4 is not None:
+                    self.step4_label.configure(image=self.apply_image_preview4)
+                    self.step4_label.grid(row=i, column=4, padx=20, pady=10)
 
             if i == 4:
                 index5 = i
@@ -448,6 +490,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text5.grid(row=i, column=1)
                 self.step_image_button5.grid(row=i, column=3)
+                if hasattr(self, "apply_image_preview5") and self.apply_image_preview5 is not None:
+                    self.step5_label.configure(image=self.apply_image_preview5)
+                    self.step5_label.grid(row=i, column=4, padx=20, pady=10)
 
             if i == 5:
                 index6 = i
@@ -456,6 +501,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text6.grid(row=i, column=1)
                 self.step_image_button6.grid(row=i, column=3)
+                if hasattr(self, "apply_image_preview6") and self.apply_image_preview6 is not None:
+                    self.step6_label.configure(image=self.apply_image_preview6)
+                    self.step6_label.grid(row=i, column=4, padx=20, pady=10)
 
             if i == 6:
                 index7 = i
@@ -464,6 +512,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text7.grid(row=i, column=1)
                 self.step_image_button7.grid(row=i, column=3)
+                if hasattr(self, "apply_image_preview7") and self.apply_image_preview7 is not None:
+                    self.step7_label.configure(image=self.apply_image_preview7)
+                    self.step7_label.grid(row=i, column=4, padx=20, pady=10)
 
             if i == 7:
                 index8 = i
@@ -472,7 +523,9 @@ class MagicWizard(tk.Toplevel):
                 self.step_label.grid(row=i, column=0,pady=10,padx=5)
                 self.step_text8.grid(row=i, column=1)
                 self.step_image_button8.grid(row=i, column=3)
-
+                if hasattr(self, "apply_image_preview8") and self.apply_image_preview8 is not None:
+                    self.step8_label.configure(image=self.apply_image_preview8)
+                    self.step8_label.grid(row=i, column=4, padx=20, pady=10)
 
             i += 1
         self.link_label.grid(row=i,column = 0,pady = 50)
@@ -496,8 +549,8 @@ class MagicWizard(tk.Toplevel):
                 apply_image = Image.open(self.filename_img_app1_full )
                 apply_image.thumbnail((60, 60))
                 self.apply_image_preview1 = ImageTk.PhotoImage(apply_image)
-                self.step1_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview1,
-                                             )
+                self.step1_label.configure(image=self.apply_image_preview1)
+
                 self.step1_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
@@ -511,8 +564,7 @@ class MagicWizard(tk.Toplevel):
                 apply_image = Image.open(self.filename_img_app2_full)
                 apply_image.thumbnail((60, 60))
                 self.apply_image_preview2 = ImageTk.PhotoImage(apply_image)
-                self.step2_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview2,
-                                             )
+                self.step2_label.configure(image=self.apply_image_preview2)
                 self.step2_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
@@ -526,8 +578,7 @@ class MagicWizard(tk.Toplevel):
                 apply_image = Image.open(self.filename_img_app3_full )
                 apply_image.thumbnail((60, 60))
                 self.apply_image_preview3 = ImageTk.PhotoImage(apply_image)
-                self.step3_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview3,
-                                             )
+                self.step3_label.configure(image=self.apply_image_preview3)
                 self.step3_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
@@ -541,8 +592,7 @@ class MagicWizard(tk.Toplevel):
                 apply_image = Image.open(self.filename_img_app4_full)
                 apply_image.thumbnail((60, 60))
                 self.apply_image_preview4 = ImageTk.PhotoImage(apply_image)
-                self.step4_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview4,
-                                             )
+                self.step4_label.configure(image=self.apply_image_preview4)
                 self.step4_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
@@ -557,8 +607,7 @@ class MagicWizard(tk.Toplevel):
                 apply_image = Image.open(self.filename_img_app5_full )
                 apply_image.thumbnail((60, 60))
                 self.apply_image_preview5 = ImageTk.PhotoImage(apply_image)
-                self.step5_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview5,
-                                             )
+                self.step5_label.configure(image=self.apply_image_preview5)
                 self.step5_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
@@ -572,8 +621,7 @@ class MagicWizard(tk.Toplevel):
                 apply_image = Image.open(self.filename_img_app6_full)
                 apply_image.thumbnail((60, 60))
                 self.apply_image_preview6 = ImageTk.PhotoImage(apply_image)
-                self.step6_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview6,
-                                             )
+                self.step6_label.configure(image=self.apply_image_preview6)
                 self.step6_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
@@ -587,8 +635,7 @@ class MagicWizard(tk.Toplevel):
                 apply_image = Image.open(self.filename_img_app7_full)
                 apply_image.thumbnail((60, 60))
                 self.apply_image_preview7 = ImageTk.PhotoImage(apply_image)
-                self.step7_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview7,
-                                             )
+                self.step7_label.configure(image=self.apply_image_preview7)
                 self.step7_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
@@ -604,7 +651,8 @@ class MagicWizard(tk.Toplevel):
                 self.apply_image_preview8 = ImageTk.PhotoImage(apply_image)
                 self.step8_label = ttk.Label(self.apply_activity_steps_frame, image=self.apply_image_preview8,
                                              )
-                self.step1_label.grid(row=index, column=4, padx=20, pady=10)
+                self.step8_label.configure(image=self.apply_image_preview8)
+                self.step8_label.grid(row=index, column=4, padx=20, pady=10)
             except:
                 print("invalid image")
 
