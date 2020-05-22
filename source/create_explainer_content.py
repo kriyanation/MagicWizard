@@ -1,3 +1,4 @@
+import logging
 import tkinter as tk
 import traceback
 
@@ -13,6 +14,7 @@ from snapshot_view import SnapshotView
 from tkinter import Label, Frame, Entry, Button, Text, OptionMenu, StringVar, filedialog, IntVar, PhotoImage
 import sqlite3, os,sys
 
+logger = logging.getLogger("MagicLogger")
 fileroot = os.path.abspath(os.path.join(os.getcwd(),".."))
 db = fileroot+os.path.sep+"MagicRoom.db"
 try:
@@ -22,6 +24,7 @@ try:
     cur.execute(sql)
 except(sqlite3.OperationalError):
     messagebox.showerror("DB Error", "Check your DB Configuration")
+    logger.exception("There was an error in checkng for DB connection")
 else:
     connection.close()
 
@@ -796,6 +799,7 @@ class MagicWizard(tk.Toplevel):
             connection.commit()
         except (sqlite3.OperationalError):
              messagebox.showerror("Error Connecting to DB","Saving the Information met with an error")
+             logger.exception("There was an error while saving the record")
         else:
              print("Database content created")
 
@@ -805,15 +809,16 @@ class MagicWizard(tk.Toplevel):
              snapshot = SnapshotView(self,self.lesson_file_manager.new_id,self.lesson_file_manager.lesson_dir+os.path.sep+"notes_"+str(self.lesson_file_manager.new_id)+".pdf")
         except:
             messagebox.showerror("Notes Generation","There was an error during notes generation")
-            traceback.print_exc()
+            logger.exception("PDF snapshot for notes met with an error")
         try:
             assessment = assessment_generate.generate_ip_paper(self.lesson_file_manager.new_id,self.lesson_file_manager.lesson_dir+os.path.sep+"ip_"+str(self.lesson_file_manager.new_id)+".pdf",db)
         except:
             messagebox.showerror("Assessment Generation", "There was an error during assessments/points generation")
-            traceback.print_exc()
+            logger.exception("Assessment print generation met with an error")
         else:
-            messagebox.showinfo("Content Created","Content Created.\nLet us play it in the lesson player from the dashboard.\n\nThe assessment and the notes material is also ready"
-                                                   "\nto be shared with our classroom.",parent=self)
+            messagebox.showinfo("Content Created","Content Created.\nLet us play it in the lesson player from the dashboard.\n\nThe assessment and the notes material is also ready."
+                                                   "\n\nThis window shall close now",parent=self)
+            self.destroy()
 
 
 
