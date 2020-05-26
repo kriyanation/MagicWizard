@@ -38,23 +38,23 @@ class MagicWizard(tk.Toplevel):
         self.data_collector = {}
         self.rowindex = 4
         self.title_frame = Frame(self)
-        self.title_frame.configure(background='beige')
-        self.configure(background='beige')
+        self.title_frame.configure(background='gray25')
+        self.configure(background='gray25')
 
         s = ttk.Style()
         s.theme_use('clam')
 
-        s.configure('Create.TLabelframe', background='beige')
-        s.configure('Create.TLabelframe.Label', font=('courier', 14, 'bold', 'italic'))
-        s.configure('Create.TLabelframe.Label', background='beige',foreground='brown')
+        s.configure('Create.TLabelframe', background='gray27')
+        s.configure('Create.TLabelframe.Label', font=('helvetica', 14, 'bold'))
+        s.configure('Create.TLabelframe.Label', background='gray27',foreground='white')
 
-        s.configure('Firebrick.Label',background='beige',foreground='dark blue',font=('courier', 9, 'bold'))
+        s.configure('Firebrick.Label',background='gray27',foreground='white',font=('helvetica', 9, 'bold'))
 
-        s.configure('Create.TButton', background='firebrick', foreground='snow')
-        s.configure('Green.TMenubutton', background='peachpuff2', foreground='firebrick')
-        s.configure('Horizontal.Green.TScale', background='firebrick', foreground='snow')
-        s.map('Create.TButton', background=[('active', '!disabled', 'maroon'), ('pressed', 'snow')],
-              foreground=[('pressed', 'snow'), ('active', 'snow')])
+        s.configure('Create.TButton', background='steel blue', foreground='white',font=('helvetica', 12, 'bold'))
+        s.configure('Green.TMenubutton', background='gray27', foreground='gray55')
+
+        s.map('Create.TButton', background=[('active', '!disabled', 'dark turquoise'), ('pressed', 'white')],
+              foreground=[('pressed', 'white'), ('active', 'white')])
 
         self.data_collector['Date'] = ''
         self.data_collector['Lesson_Type'] = 'Science'
@@ -114,18 +114,17 @@ class MagicWizard(tk.Toplevel):
         self.filename_img_app6_full = ""
         self.filename_img_app7_full= ""
         self.filename_img_app8_full = ""
-        self.bottom_frame = Frame(self)
-        self.bottom_frame.configure(background='beige')
+        self.bottom_frame = Frame(self,background="gray27")
         self.factual_frame = Frame(self)
-        self.factual_frame.configure(background='beige')
+        self.factual_frame.configure(background='gray27')
         self.apply_frame = Frame(self)
-        self.apply_frame.configure(background='beige')
+        self.apply_frame.configure(background='gray27')
         self.apply_activity_frame = Frame(self.apply_frame)
-        self.apply_activity_frame.configure(background='beige')
+        self.apply_activity_frame.configure(background='gray27')
         self.apply_activity_steps_frame = Frame(self.apply_activity_frame)
-        self.apply_activity_steps_frame.configure(background='beige')
+        self.apply_activity_steps_frame.configure(background='gray27')
         self.create_frame = Frame(self)
-        self.create_frame.configure(background='beige')
+        self.create_frame.configure(background='gray27')
         self.factual_term_text1 = Entry(self.factual_frame)
         self.factual_term_desc_text1 = Text(self.factual_frame, wrap=tk.WORD, width=30, height=5)
         self.factual_term_text2 = Entry(self.factual_frame)
@@ -178,7 +177,7 @@ class MagicWizard(tk.Toplevel):
                                                 "you want to start your topic with.\nWe can also paste text in any language for introducing the topic."
                                                 ,
                                                 wraplength="300", style='Firebrick.Label')
-        self.title_label = ttk.Label(self.title_frame, text="Title of your topic",style='Create.TLabelframe.Label')
+        self.title_label = ttk.Label(self.title_frame, text="Title",style='Create.TLabelframe.Label')
         self.title_text = Entry(self.title_frame)
         self.title_image_label = ttk.Label(self.title_frame, text="Image Related to Title", style='Create.TLabelframe.Label')
         self.title_image_button = ttk.Button(self.title_frame, text="Add Image",command=self.add_title_image,style='Create.TButton')
@@ -663,10 +662,10 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_create_frame(self):
-        self.create_question_page_Label = ttk.Label(self.create_frame, text='Here we add our questions.These are then displayed in the player and a PDF file for the same is generated.'
+        self.create_question_page_Label = ttk.Label(self.create_frame, text='Here we add our questions for assessment.These are then displayed in the player and a PDF file for the same is generated.'
                                                                   , wraplength=600,
                                           style='Firebrick.Label')
-        self.create_question_Label = ttk.Label(self.create_frame, text='Add your questions here',wraplength= 300,style='Create.TLabelframe.Label')
+        self.create_question_Label = ttk.Label(self.create_frame, text='Assessment Questions',wraplength= 300,style='Create.TLabelframe.Label')
         #create_test_label = ttk.Label(create_frame, text='Provide the Answer Key in this format(11, 23, 31,44, 52 - Would mean 1st Q - 11 option is correct, 2ndquestion 3rd option is correct and so on....)',wraplength=400,style='Create.TLabelframe.Label')
 
         #question_label = ttk.Label(create_frame, text='Total Number of questions?',style='Create.TLabelframe.Label')
@@ -674,9 +673,9 @@ class MagicWizard(tk.Toplevel):
 
         #create_test_label.grid(row=0, column=0)
         #create_test_entry.grid(row=0, column=1)
-        self.create_question_page_Label.grid(row=0,column=0,columnspan=3)
+        self.create_question_page_Label.grid(row=0,column=0,columnspan=3,padx=5)
         self.create_question_Label.grid(row=1,column=0)
-        self.create_question_text.grid(row=1,column=1)
+        self.create_question_text.grid(row=1,column=1,padx=5)
         #question_label.grid(row=2, column=0)
         #question_text.grid(row=2, column=1)
 
