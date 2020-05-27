@@ -51,7 +51,7 @@ class MagicWizard(tk.Toplevel):
         s.configure('Firebrick.Label',background='gray27',foreground='white',font=('helvetica', 9, 'bold'))
 
         s.configure('Create.TButton', background='steel blue', foreground='white',font=('helvetica', 12, 'bold'))
-        s.configure('Green.TMenubutton', background='gray27', foreground='gray55')
+        s.configure('Green.TMenubutton', background='white', foreground='gray55')
 
         s.map('Create.TButton', background=[('active', '!disabled', 'dark turquoise'), ('pressed', 'white')],
               foreground=[('pressed', 'white'), ('active', 'white')])
@@ -190,17 +190,17 @@ class MagicWizard(tk.Toplevel):
         self.title_running_notes = Text(self.title_frame,wrap=tk.WORD, width=30, height=5,pady=2)
         self.title_frame.pack()
         self.title_doc.grid(row=0, column=0,rowspan=4, pady=10,padx=50)
-        self.title_label.grid(row=1, column=1,pady=50)
-        self.title_text.grid(row=1, column=2,pady=5)
-        self.title_image_label.grid(row=2,column=1,pady=2)
-        self.title_image_button.grid(row=2,column=2,pady=2)
-        self.title_image_video_label.grid(row=3,column=1,pady=2)
-        self.title_video_button.grid(row=3,column=2,pady=2)
+        self.title_label.grid(row=1, column=1,pady=50,sticky=tk.W)
+        self.title_text.grid(row=1, column=2,pady=5,padx=5,sticky=tk.W)
+        self.title_image_label.grid(row=2,column=1,pady=2,sticky=tk.W)
+        self.title_image_button.grid(row=2,column=2,pady=2,padx=5,sticky=tk.W)
+        self.title_image_video_label.grid(row=3,column=1,pady=2,sticky=tk.W)
+        self.title_video_button.grid(row=3,column=2,pady=2,padx=5,sticky=tk.W)
 
-        self.title_image_url_label.grid(row=3,column=3,pady=2)
-        self.title_image_video_url.grid(row=3,column=4,pady=2,padx=5)
-        self.title_running_notes_label.grid(row=4,column=1,pady=2)
-        self.title_running_notes.grid(row=4,column=2,pady=2)
+        self.title_image_url_label.grid(row=3,column=3,pady=2,sticky=tk.W)
+        self.title_image_video_url.grid(row=3,column=4,pady=2,padx=5,sticky=tk.W)
+        self.title_running_notes_label.grid(row=4,column=1,pady=2,sticky=tk.W)
+        self.title_running_notes.grid(row=4,column=2,pady=2,padx=5,columnspan=2,sticky=tk.W)
         #title_video_notes_lang.grid(row=3, column=2,pady=2,padx=2)
 
 
@@ -226,21 +226,21 @@ class MagicWizard(tk.Toplevel):
         if id == 0:
             self.factual_image_display1 = ImageTk.PhotoImage(factual_image)
             img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display1, background="beige")
-            img_title_label.grid(row=3, column=1,pady=10)
+            img_title_label.grid(row=3, column=1,pady=10,sticky=tk.W)
             self.data_collector['Factual_Image1'] = filename_img_fact
             self.filename_img_fact1_full = self.filename_img_fact_full
         elif id == 1:
             self.factual_image_display2 = ImageTk.PhotoImage(factual_image)
             img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display2, background="beige")
 
-            img_title_label.grid(row=6, column=1,pady=10)
+            img_title_label.grid(row=6, column=1,pady=10,sticky=tk.W)
             self.data_collector['Factual_Image2'] = filename_img_fact
             self.filename_img_fact2_full = self.filename_img_fact_full
         elif id == 2:
             self.factual_image_display3 = ImageTk.PhotoImage(factual_image)
             img_title_label = ttk.Label(self.factual_frame, image=self.factual_image_display3, background="beige")
 
-            img_title_label.grid(row=9, column=1,pady=10)
+            img_title_label.grid(row=9, column=1,pady=10,sticky=tk.W)
             self.data_collector['Factual_Image3'] = filename_img_fact
             self.filename_img_fact3_full = self.filename_img_fact_full
 
@@ -258,12 +258,12 @@ class MagicWizard(tk.Toplevel):
         self.factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Create.TLabelframe.Label')
         self.factual_term_desc_text = Text(self.factual_frame,wrap=tk.WORD, width=30, height=5)
         self.factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=0: self.add_factual_image(id),style='Create.TButton')
-        self.factual_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200)
-        self.factual_term_label.grid(row=1, column=0,pady=20)
-        self.factual_term_text.grid(row=1, column=1)
-        self.factual_term_desc_label.grid(row=2, column=0)
-        self.factual_term_desc_text.grid(row=2, column=1)
-        self.factual_term_image_button.grid(row=3,column=0)
+        self.factual_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200,sticky=tk.W)
+        self.factual_term_label.grid(row=1, column=0,pady=20,sticky=tk.W)
+        self.factual_term_text.grid(row=1, column=1,padx=5,sticky=tk.W)
+        self.factual_term_desc_label.grid(row=2, column=0,sticky=tk.W)
+        self.factual_term_desc_text.grid(row=2, column=1,padx=5,sticky=tk.W)
+        self.factual_term_image_button.grid(row=3,column=0,sticky=tk.W)
 
 
     def add_factual_one(self):
@@ -274,15 +274,15 @@ class MagicWizard(tk.Toplevel):
         self.factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Create.TLabelframe.Label')
         self.factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=1: self.add_factual_image(id),style='Create.TButton')
 
-        self.factual_term_label.grid(row=4, column=0, pady=10)
-        self.factual_term_text1.grid(row=4, column=1)
-        self.factual_term_desc_label.grid(row=5, column=0)
-        self.factual_term_desc_text1.grid(row=5, column=1)
+        self.factual_term_label.grid(row=4, column=0, pady=10,sticky=tk.W)
+        self.factual_term_text1.grid(row=4, column=1,padx=5,sticky=tk.W)
+        self.factual_term_desc_label.grid(row=5, column=0,sticky=tk.W)
+        self.factual_term_desc_text1.grid(row=5, column=1,padx=5,sticky=tk.W)
         print(self.factual_index)
         self.factual_button.grid_remove()
         self.factual_button_one = ttk.Button(self.factual_frame, text='Add One More', command=self.add_factual_two,style='Create.TButton')
-        self.factual_button_one.grid(row=6, column=2)
-        self.factual_term_image_button.grid(row=6,column=0)
+        self.factual_button_one.grid(row=6, column=2,sticky=tk.W)
+        self.factual_term_image_button.grid(row=6,column=0,padx=5,sticky=tk.W)
 
 
 
@@ -300,13 +300,13 @@ class MagicWizard(tk.Toplevel):
 
         self.rowindex += 3
         print(self.rowindex)
-        self.factual_term_label.grid(row=self.rowindex, column=0,pady=10)
-        self.factual_term_text2.grid(row=self.rowindex, column=1)
+        self.factual_term_label.grid(row=self.rowindex, column=0,pady=10,sticky=tk.W)
+        self.factual_term_text2.grid(row=self.rowindex, column=1,padx=5,sticky=tk.W)
         self.rowindex += 1
-        self.factual_term_desc_label.grid(row=self.rowindex, column=0)
-        self.factual_term_desc_text2.grid(row=self.rowindex, column=1)
+        self.factual_term_desc_label.grid(row=self.rowindex, column=0,sticky=tk.W)
+        self.factual_term_desc_text2.grid(row=self.rowindex, column=1,padx=5,sticky=tk.W)
         self.rowindex += 1
-        factual_term_image_button.grid(row=self.rowindex,column=0)
+        factual_term_image_button.grid(row=self.rowindex,column=0,sticky=tk.W)
     # factual_button_one.grid(row=rowindex, column=2)
 
 
@@ -352,6 +352,7 @@ class MagicWizard(tk.Toplevel):
             self.apply_steps_dropdown = ttk.OptionMenu(self.apply_activity_frame, self.selected_steps, '0', '1', '2', '3', '4', '5', '6', '7',
                                               '8',
                                               command=self.show_individual_steps,style='Green.TMenubutton')
+            self.apply_steps_dropdown["menu"].configure(background="white")
 
             print(selected_string)
 
