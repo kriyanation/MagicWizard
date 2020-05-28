@@ -19,7 +19,7 @@ class LessonFileManager():
             self.new_id = rows[0] + 1
         except sqlite3.OperationalError:
             messagebox.showerror("DB Error", "Cannot Connect to Database")
-            logger.error(traceback.print_exc())
+            logger.exception("cannot connect to database")
 
 
         try:
@@ -44,7 +44,7 @@ class LessonFileManager():
                 os.makedirs(self.save_path)
         except (OSError, IOError):
             print("Directory could not be created")
-            logger.error(traceback.print_exc())
+            logger.exception("directory could not be created")
 
 
 
@@ -53,11 +53,11 @@ class LessonFileManager():
             copyfile(filepath,self.image_path+os.path.sep+os.path.basename(filepath))
         except (IOError, OSError):
             print("Image File could not be copied")
-            logger.error(traceback.print_exc())
+            logger.exception("Image file could not be copied")
 
     def add_video_file(self,filepath):
         try:
             copyfile(filepath, self.video_path + os.path.sep + os.path.basename(filepath))
         except (IOError, OSError):
             print("Video File could not be copied")
-            logger.error(traceback.print_exc())
+            logger.exception("Video file could not be copied")

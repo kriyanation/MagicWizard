@@ -32,6 +32,7 @@ else:
 class MagicWizard(tk.Toplevel):
     def __init__(self,parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
+        logger.info("Inside Create Initialize")
         self.index = 0
         self.factual_index = 1
         self.factual_button_one = None
@@ -148,17 +149,15 @@ class MagicWizard(tk.Toplevel):
         self.back_button.pack(side='left')
 
     def add_title_video(self):
-
+        logger.info("Inside add_title_video of create widget")
         self.filename_vid_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Video',parent=self)
         self.filename_vid_title = os.path.basename(self.filename_vid_title_full)
         print(self.filename_vid_title)
         if (self.filename_vid_title != ''):
             self.title_image_video_url.insert(0,self.filename_vid_title)
-            #vid_title_label = ttk.Label(title_frame, text=filename_vid_title,style='Create.TLabelframe.Label' )
-            #vid_title_label.grid(row=3,column=2,pady=2,padx = 2)
             self.data_collector['Title_Video'] = self.title_image_video_url.get()
     def add_title_image(self):
-
+        logger.info("Inside add_title_image of create widget")
         self.filename_img_title_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
         self.title_image = Image.open(self.filename_img_title_full)
         self.title_image.thumbnail((100,100))
@@ -171,6 +170,7 @@ class MagicWizard(tk.Toplevel):
             self.data_collector['Title_Image'] = self.filename_img_title
 
     def title_frame_create(self):
+        logger.info("Inside title frame of create widget")
         self.language_notes = StringVar()
         self.language_notes.set("English")
         self.title_doc = ttk.Label(self.title_frame, text="Welcome to the Learning Wizard. Here, we shall be creating your topic introduction page. Add an image and a video which "
@@ -213,6 +213,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def  add_factual_image(self,id):
+        logger.info("Inside add_factual_image of create widget")
         self.filename_img_fact_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
         filename_img_fact = os.path.basename(self.filename_img_fact_full)
         print(filename_img_fact)
@@ -246,7 +247,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_factual(self):
-
+        logger.info("Inside add_factual method of create widget")
         self.factual_page_label = ttk.Label(self.factual_frame,
                   text="Here, we cover the facts or the knowledge aspects.We can introduce new terms or concepts.We can also introduce new vocabulary words."
                        "Each term shall be associated to an image and a short explanation.\n\n\nThree new terms/topcs can be intorduced here as part of one lesson."
@@ -267,6 +268,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_factual_one(self):
+        logger.info("Inside add_factual_one of create widget")
 
         self.factual_index += 1
         self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term",style='Create.TLabelframe.Label')
@@ -290,7 +292,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_factual_two(self):
-
+        logger.info("Inside add_factual_two of create widget")
         self.factual_index += 1
         self.factual_button_one.grid_remove()
         self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term", style='Create.TLabelframe.Label')
@@ -311,6 +313,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_apply_frame(self):
+        logger.info("Inside add_apply_frame of create widget")
         self.apply_page_label = ttk.Label(self.apply_frame,
                   text="Here, we focus on building the skill.\n"
                        
@@ -391,6 +394,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def show_individual_steps(self,selected_number):
+        logger.info("Inside show_individual_steps of create widget")
         for widget in self.apply_activity_steps_frame.winfo_children():
             widget.destroy()
         self.data_collector['Application_Steps_Number'] = int(selected_number)
@@ -536,11 +540,13 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_step(self,event, index):
+        logger.info("Inside add_step of create widget")
         print("Index:"+str(index)+" Widget:"+event.widget.get())
         self.data_collector["Application_Step_Description"+str(index+1)] = event.widget.get()
 
 
     def add_image(self,apply_frame, index):
+        logger.info("Inside add_image of create widget")
         if index == 0:
 
             filename_full = filedialog.askopenfilename(initialdir=fileroot,title='Select Image',parent=self)
@@ -663,6 +669,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def add_create_frame(self):
+        logger.info("Inside add_create_frame of create widget")
         self.create_question_page_Label = ttk.Label(self.create_frame, text='Here we add our questions for assessment.These are then displayed in the player and a PDF file for the same is generated.'
                                                                   , wraplength=600,
                                           style='Firebrick.Label')
@@ -685,7 +692,7 @@ class MagicWizard(tk.Toplevel):
 
 
     def next_page(self):
-
+        logger.info("Inside next_page of create widget")
 
         self.index += 1
         if self.index == 1:
@@ -734,7 +741,7 @@ class MagicWizard(tk.Toplevel):
 
     def save_data(self):
 
-
+        logger.info("Inside save_data of create widget")
         if self.data_collector["Title_Image"] == "":
 
              self.data_collector["Title_Image"] = "LR_Placeholder.jpeg"
@@ -818,12 +825,13 @@ class MagicWizard(tk.Toplevel):
         else:
             messagebox.showinfo("Content Created","Content Created.\nLet us play it in the lesson player from the dashboard.\n\nThe assessment and the notes material is also ready."
                                                    "\n\nThis window shall close now",parent=self)
+            logger.info("Created new lesson")
             self.destroy()
 
 
 
     def previous_page(self):
-
+        logger.info("Inside previous_page of create widget")
         self.next_button.config(text='Next')
         if self.index == 1:
             self.index = 0
