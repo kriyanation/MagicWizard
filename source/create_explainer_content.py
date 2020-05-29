@@ -39,17 +39,17 @@ class MagicWizard(tk.Toplevel):
         self.data_collector = {}
         self.rowindex = 4
         self.title_frame = Frame(self)
-        self.title_frame.configure(background='gray25')
-        self.configure(background='gray25')
+        self.title_frame.configure(background='gray20')
+        self.configure(background='gray20')
 
         s = ttk.Style()
         s.theme_use('clam')
 
-        s.configure('Create.TLabelframe', background='gray27')
+        s.configure('Create.TLabelframe', background='gray22')
         s.configure('Create.TLabelframe.Label', font=('helvetica', 14, 'bold'))
-        s.configure('Create.TLabelframe.Label', background='gray27',foreground='white')
+        s.configure('Create.TLabelframe.Label', background='gray22',foreground='white')
 
-        s.configure('Firebrick.Label',background='gray27',foreground='white',font=('helvetica', 9, 'bold'))
+        s.configure('Firebrick.Label',background='gray22',foreground='white',font=('helvetica', 9, 'bold'))
 
         s.configure('Create.TButton', background='steel blue', foreground='white',font=('helvetica', 12, 'bold'))
         s.configure('Green.TMenubutton', background='white', foreground='gray55')
@@ -115,17 +115,17 @@ class MagicWizard(tk.Toplevel):
         self.filename_img_app6_full = ""
         self.filename_img_app7_full= ""
         self.filename_img_app8_full = ""
-        self.bottom_frame = Frame(self,background="gray27")
+        self.bottom_frame = Frame(self,background="gray22")
         self.factual_frame = Frame(self)
-        self.factual_frame.configure(background='gray27')
+        self.factual_frame.configure(background='gray22')
         self.apply_frame = Frame(self)
-        self.apply_frame.configure(background='gray27')
+        self.apply_frame.configure(background='gray22')
         self.apply_activity_frame = Frame(self.apply_frame)
-        self.apply_activity_frame.configure(background='gray27')
+        self.apply_activity_frame.configure(background='gray22')
         self.apply_activity_steps_frame = Frame(self.apply_activity_frame)
-        self.apply_activity_steps_frame.configure(background='gray27')
+        self.apply_activity_steps_frame.configure(background='gray22')
         self.create_frame = Frame(self)
-        self.create_frame.configure(background='gray27')
+        self.create_frame.configure(background='gray22')
         self.factual_term_text1 = Entry(self.factual_frame)
         self.factual_term_desc_text1 = Text(self.factual_frame, wrap=tk.WORD, width=30, height=5)
         self.factual_term_text2 = Entry(self.factual_frame)
@@ -183,7 +183,7 @@ class MagicWizard(tk.Toplevel):
         self.title_image_button = ttk.Button(self.title_frame, text="Add Image",command=self.add_title_image,style='Create.TButton')
         self.title_image_video_label = ttk.Label(self.title_frame, text="Video Related to Title", style='Create.TLabelframe.Label')
         self.title_video_button = ttk.Button(self.title_frame, text="Add Video",command=self.add_title_video,style='Create.TButton')
-        self.title_image_url_label = ttk.Label(self.title_frame, text="(OR) youtube URL", style='Create.TLabelframe.Label')
+        self.title_image_url_label = ttk.Label(self.title_frame, text="(OR) youtube URL\n(Requires Internet)", style='Create.TLabelframe.Label')
         self.title_image_video_url = ttk.Entry(self.title_frame)
         self.title_video_notes_lang = ttk.OptionMenu(self.title_frame, self.language_notes,"English", "Hindi", "Kannada", "Tamil",style='Create.TButton')
         self.title_running_notes_label = ttk.Label(self.title_frame, text="Topic Introduction \n(2 to 3 sentences)", style='Create.TLabelframe.Label')
