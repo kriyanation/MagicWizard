@@ -183,7 +183,7 @@ class MagicWizard(tk.Toplevel):
         self.title_image_button = ttk.Button(self.title_frame, text="Add Image",command=self.add_title_image,style='Create.TButton')
         self.title_image_video_label = ttk.Label(self.title_frame, text="Video Related to Title", style='Create.TLabelframe.Label')
         self.title_video_button = ttk.Button(self.title_frame, text="Add Video",command=self.add_title_video,style='Create.TButton')
-        self.title_image_url_label = ttk.Label(self.title_frame, text="(OR) youtube URL\n(Requires Internet)", style='Create.TLabelframe.Label')
+        self.title_image_url_label = ttk.Label(self.title_frame, text="(OR) youtube URL", style='Create.TLabelframe.Label')
         self.title_image_video_url = ttk.Entry(self.title_frame)
         self.title_video_notes_lang = ttk.OptionMenu(self.title_frame, self.language_notes,"English", "Hindi", "Kannada", "Tamil",style='Create.TButton')
         self.title_running_notes_label = ttk.Label(self.title_frame, text="Topic Introduction \n(2 to 3 sentences)", style='Create.TLabelframe.Label')
