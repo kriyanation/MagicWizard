@@ -4,6 +4,7 @@ import traceback
 
 from tkinter import ttk,messagebox,Toplevel
 
+import Create_Utils
 import assessment_generate
 from PIL import Image, ImageTk
 
@@ -133,6 +134,14 @@ class MagicWizard(tk.Toplevel):
         self.factual_button = ttk.Button(self.factual_frame, text='Add One More', command=self.add_factual_one, style='Create.TButton')
         self.factual_button.grid(row=4, column=3)
         self.htmlvar = StringVar()
+        self.header_var = StringVar()
+        self.header_label = tk.Label(self, textvariable=self.header_var, font=("helvetica", 12, "bold"),
+                                     foreground="aquamarine",
+                                     background="gray22")  # style="Create.TLabelframe.Label"
+        self.header_label.pack(pady=5)
+        self.header_var.set(
+            "Activate Prior Knowledge - Introduce, Ask Questions, Play a related Video and Show a related visual of the topic")
+
         self.var_video_audio = IntVar()
         self.question_text = Entry(self.create_frame, width=10)
         # create_test_entry = Entry(create_frame, width=20)
@@ -703,6 +712,9 @@ class MagicWizard(tk.Toplevel):
             self.data_collector['Title_Video'] = self.title_image_video_url.get()
             self.title_frame.pack_forget()
             self.factual_frame.pack(side='top')
+            self.header_var.set(
+                "Acquire New Knowledge - Introduce new terms, topics an definitions , add a visual cue for each")
+
         if self.index == 2:
             self.data_collector["Factual_Term1"] = self.factual_term_text.get()
             self.data_collector["Factual_Term1_Description"] = self.factual_term_desc_text.get('1.0', 'end')
@@ -721,6 +733,9 @@ class MagicWizard(tk.Toplevel):
             self.apply_frame.pack(side='top')
             self.apply_activity_frame.grid(row=2, column=0, columnspan=2)
             self.apply_activity_steps_frame.grid(row=3, column=0, columnspan=2)
+            self.header_var.set(
+                "Application - Add a set of steps with an associated image. Use animation in the player later.e.g. Experiments or Stories and Activities")
+
         if self.index == 3:
             if self.data_collector['Application_Mode'] =='Video':
                 self.data_collector['Application_Video_Link_Notes'] = self.video_link_running_notes.get('1.0', 'end')
@@ -728,6 +743,7 @@ class MagicWizard(tk.Toplevel):
             self.apply_frame.pack_forget()
             self.create_frame.pack()
             self.next_button.config(text='Submit')
+            self.header_var.set("Assessment - Type your short questions to check for understanding")
         if self.index == 4:
             self.data_collector["Answer_Key"] = ""
             self.data_collector["Video_Audio_Assessment_Flag"] = 0
@@ -742,20 +758,7 @@ class MagicWizard(tk.Toplevel):
     def save_data(self):
 
         logger.info("Inside save_data of create widget")
-        if self.data_collector["Title_Image"] == "":
 
-             self.data_collector["Title_Image"] = "LR_Placeholder.jpeg"
-             self.filename_img_title_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
-        if self.data_collector["Factual_Image1"] == "":
-             self.data_collector["Factual_Image1"] = "LR_Placeholder.jpeg"
-             self.filename_img_fact1_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
-        if self.data_collector["Factual_Image2"] == "":
-             self.data_collector["Factual_Image2"] = "LR_Placeholder.jpeg"
-             self.filename_img_fact2_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
-
-        if self.data_collector["Factual_Image3"] == "":
-             self.data_collector["Factual_Image3"] = "LR_Placeholder.jpeg"
-             self.filename_img_fact3_full = fileroot+os.path.sep+"ph"+os.path.sep+"LR_Placeholder.jpeg"
 
         self.lesson_file_manager = LessonFileManager(fileroot)
         self.lesson_file_manager.add_image_file(self.filename_img_title_full)
@@ -813,7 +816,9 @@ class MagicWizard(tk.Toplevel):
 
 
         try:
-             snapshot = SnapshotView(self,self.lesson_file_manager.new_id,self.lesson_file_manager.lesson_dir+os.path.sep+"notes_"+str(self.lesson_file_manager.new_id)+".pdf")
+            Create_Utils.EditUtils(self.lesson_file_manager.new_id,
+                                 self.lesson_file_manager.lesson_dir + os.path.sep + "notes_" + str(self.lesson_file_manager.new_id) + ".pdf")
+            # snapshot = SnapshotView(self,,self.lesson_file_manager.lesson_dir+os.path.sep+"notes_"+str(self.lesson_file_manager.new_id)+".pdf")
         except:
             messagebox.showerror("Notes Generation","There was an error during notes generation")
             logger.exception("PDF snapshot for notes met with an error")
@@ -837,16 +842,19 @@ class MagicWizard(tk.Toplevel):
             self.index = 0
             self.factual_frame.pack_forget()
             self.title_frame.pack(side='top')
+            self.header_var.set(
+                "Activate Prior Knowledge - Introduce, Ask Questions, Play a related Video and Show a related visual of the topic")
         if self.index == 2:
             self.index = 1
             self.apply_frame.pack_forget()
             self.factual_frame.pack(side='top')
+            self.header_var.set(
+                "Acquire New Knowledge - Introduce new terms, topics an definitions , add a visual cue for each")
         if self.index == 3:
             self.index = 2
             self.create_frame.pack_forget()
             self.apply_frame.pack(side='top')
-
-
-
+            self.header_var.set(
+                "Application - Add a set of steps with an associated image. Use animation in the player later.e.g. Experiments or Stories and Activities")
 
 #magic_wizard.mainloop()
