@@ -145,7 +145,7 @@ class MagicWizard(tk.Toplevel):
         self.var_video_audio = IntVar()
         self.question_text = Entry(self.create_frame, width=10)
         # create_test_entry = Entry(create_frame, width=20)
-        self.create_question_text = Text(self.create_frame, wrap=tk.WORD, width=70, height=30)
+        self.create_question_text = Text(self.create_frame, wrap=tk.WORD, width=70, height=20)
         self.title_frame_create()
         self.add_factual()
         self.add_apply_frame()
@@ -182,10 +182,17 @@ class MagicWizard(tk.Toplevel):
         logger.info("Inside title frame of create widget")
         self.language_notes = StringVar()
         self.language_notes.set("English")
-        self.title_doc = ttk.Label(self.title_frame, text="Welcome to the Learning Wizard. Here, we shall be creating your topic introduction page. Add an image and a video which "
-                                                "you want to start your topic with.\nWe can also paste text in any language for introducing the topic."
+        self.title_doc = ttk.Label(self.title_frame, text="Welcome to the Learning Wizard. Here, we shall be creating your topic introduction page.\n\nAdd an image and a video with which "
+                                                "you want to start your topic.\n\n Use the Image and Video search in the \"Teacher Tools\" section of our dashboard to download images and "
+                                                "videos"
                                                 ,
                                                 wraplength="300", style='Firebrick.Label')
+        self.title_doc_image = Image.open("../images/present_title.png")
+        self.title_doc_image.thumbnail((300,300))
+        self.title_doc_image_preview = ImageTk.PhotoImage(self.title_doc_image)
+        self.title_doc_image_label = ttk.Label(self.title_frame, text="Preview Sample Lesson Title Page"
+                                                                      "", style='Create.TLabelframe.Label')
+        self.title_doc_image_preview_label = ttk.Label(self.title_frame, image=self.title_doc_image_preview)
         self.title_label = ttk.Label(self.title_frame, text="Title",style='Create.TLabelframe.Label')
         self.title_text = Entry(self.title_frame)
         self.title_image_label = ttk.Label(self.title_frame, text="Image Related to Title", style='Create.TLabelframe.Label')
@@ -199,6 +206,8 @@ class MagicWizard(tk.Toplevel):
         self.title_running_notes = Text(self.title_frame,wrap=tk.WORD, width=30, height=5,pady=2)
         self.title_frame.pack()
         self.title_doc.grid(row=0, column=0,rowspan=4, pady=10,padx=50)
+        self.title_doc_image_label.grid(row=5,column=0,pady=10,padx=50)
+        self.title_doc_image_preview_label.grid(row=6,column=0,pady=10,padx=50)
         self.title_label.grid(row=1, column=1,pady=50,sticky=tk.W)
         self.title_text.grid(row=1, column=2,pady=5,padx=5,sticky=tk.W)
         self.title_image_label.grid(row=2,column=1,pady=2,sticky=tk.W)
@@ -259,16 +268,25 @@ class MagicWizard(tk.Toplevel):
         logger.info("Inside add_factual method of create widget")
         self.factual_page_label = ttk.Label(self.factual_frame,
                   text="Here, we cover the facts or the knowledge aspects.We can introduce new terms or concepts.We can also introduce new vocabulary words."
-                       "Each term shall be associated to an image and a short explanation.\n\n\nThree new terms/topcs can be intorduced here as part of one lesson."
-                       "\n\n\nIf you need to cover more terms or topics we encourage you"
-                       "to create a new lesson for the same. Let us go ahead and add our content!",
+                       "Each term shall be associated to an image and a short explanation.\n\nThree new terms/topcs can be introduced here as part of one lesson."
+                       "\n\nIf you need to cover more terms or topics we encourage you"
+                       " to create a new lessons for the same.",
                   wraplength="300", style='Firebrick.Label')
+        self.factual_doc_image = Image.open("../images/present_fact.png")
+        self.factual_doc_image.thumbnail((300, 300))
+        self.factual_doc_image_preview = ImageTk.PhotoImage(self.factual_doc_image)
+        self.factual_doc_image_label = ttk.Label(self.factual_frame, text="Preview Sample Lesson\nFactual Page"
+                                                                      , style='Create.TLabelframe.Label')
+        self.factual_doc_image_preview_label = ttk.Label(self.factual_frame, image=self.factual_doc_image_preview)
+
         self.factual_term_label = ttk.Label(self.factual_frame, text="Definition or New Term",style='Create.TLabelframe.Label' )
         self.factual_term_text = Entry(self.factual_frame)
         self.factual_term_desc_label = ttk.Label(self.factual_frame, text="Description",style='Create.TLabelframe.Label')
         self.factual_term_desc_text = Text(self.factual_frame,wrap=tk.WORD, width=30, height=5)
         self.factual_term_image_button = ttk.Button(self.factual_frame, text='Add Image', command=lambda id=0: self.add_factual_image(id),style='Create.TButton')
-        self.factual_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200,sticky=tk.W)
+        self.factual_page_label.grid(row=1, column=8,rowspan=7, pady=10,padx=200,sticky=tk.W)
+        self.factual_doc_image_label.grid(row=8, column=8, pady=10, padx=200, sticky=tk.W)
+        self.factual_doc_image_preview_label.grid(row=9, column=8, pady=10, padx=200, sticky=tk.W)
         self.factual_term_label.grid(row=1, column=0,pady=20,sticky=tk.W)
         self.factual_term_text.grid(row=1, column=1,padx=5,sticky=tk.W)
         self.factual_term_desc_label.grid(row=2, column=0,sticky=tk.W)
@@ -324,14 +342,20 @@ class MagicWizard(tk.Toplevel):
     def add_apply_frame(self):
         logger.info("Inside add_apply_frame of create widget")
         self.apply_page_label = ttk.Label(self.apply_frame,
-                  text="Here, we focus on building the skill.\n"
-                       
-                       "We describe an activity and is a place of highest interaction.You are presented with a drawable whiteboard in the player which is connected to a set of steps. Each step allows an image to appear"
-                       " in the whiteboard which can be moved around.\nAn example application can be an experiment which has a set of steps and each step has an image associated with it"
-                       " another example is an activity in Language subject where each step is a important line from the poem followed by "
-                       " a question.The images can be word or letter clues.You can refer to an external link to open related resources for the activity",
-                        wraplength="200", style='Firebrick.Label')
-        self.apply_page_label.grid(row=1, column=8,rowspan=10, pady=10,padx=200)
+                  text="In this step you are presented with a drawable whiteboard in the player which is connected to a set of steps.\n\nEach step allows an image to appear"
+                       " in the whiteboard which can be moved around.\n\nExamples can be an experiment which has a set of steps"
+                       " or a set of characteristics of a country.\n\n",
+                        wraplength="300", style='Firebrick.Label')
+        self.apply_doc_image = Image.open("../images/apply.png")
+        self.apply_doc_image.thumbnail((300, 300))
+        self.apply_doc_image_preview = ImageTk.PhotoImage(self.apply_doc_image)
+        self.apply_doc_image_label = ttk.Label(self.apply_frame, text="Preview Sample Lesson\nApplication Page"
+                                                 , style='Create.TLabelframe.Label')
+        self.apply_doc_image_preview_label = ttk.Label(self.apply_frame, image=self.apply_doc_image_preview)
+        self.apply_page_label.grid(row=1, column=2, rowspan=2,pady=10,padx=50)
+        #self.apply_doc_image_label.grid(row=1, column=9, pady=10, padx=200)
+        self.apply_doc_image_preview_label.grid(row=2, column=3, pady=10, padx=20)
+
         # apply_term_label = ttk.Label(apply_frame, text="How would you want to show the application?",style='Create.TLabelframe.Label' )
         # selected = StringVar(magic_wizard)
         # selected.set('No Selection')
@@ -684,7 +708,7 @@ class MagicWizard(tk.Toplevel):
 
     def add_create_frame(self):
         logger.info("Inside add_create_frame of create widget")
-        self.create_question_page_Label = ttk.Label(self.create_frame, text='Here we add our questions for assessment.These are then displayed in the player and a PDF file for the same is generated.'
+        self.create_question_page_Label = ttk.Label(self.create_frame, text='Here we add our questions for assessment.These are then displayed in the player and a PDF file for the same can be generated.'
                                                                   , wraplength=600,
                                           style='Firebrick.Label')
         self.create_question_Label = ttk.Label(self.create_frame, text='Assessment Questions',wraplength= 300,style='Create.TLabelframe.Label')
@@ -695,9 +719,17 @@ class MagicWizard(tk.Toplevel):
 
         #create_test_label.grid(row=0, column=0)
         #create_test_entry.grid(row=0, column=1)
+        self.create_doc_image = Image.open("../images/assessment.png")
+        self.create_doc_image.thumbnail((300, 300))
+        self.create_doc_image_preview = ImageTk.PhotoImage(self.create_doc_image)
+        self.create_doc_image_label = ttk.Label(self.create_frame, text="Preview Sample Lesson\nApplication Page"
+                                               , style='Create.TLabelframe.Label')
+        self.create_doc_image_preview_label = ttk.Label(self.create_frame, image=self.create_doc_image_preview)
+
         self.create_question_page_Label.grid(row=0,column=0,columnspan=3,padx=5)
         self.create_question_Label.grid(row=1,column=0)
         self.create_question_text.grid(row=1,column=1,padx=5)
+        self.create_doc_image_preview_label.grid(row=1,column=2,padx=10)
         #question_label.grid(row=2, column=0)
         #question_text.grid(row=2, column=1)
 
