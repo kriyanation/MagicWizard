@@ -16,7 +16,10 @@ class LessonFileManager():
             sql = "SELECT Lesson_ID FROM Magic_Science_Lessons ORDER BY Lesson_ID Desc Limit 1"
             cur.execute(sql)
             rows = cur.fetchone()
-            self.new_id = rows[0] + 1
+            if rows is not None:
+                self.new_id = rows[0] + 1
+            else:
+                self.new_id = 1
         except sqlite3.OperationalError:
             messagebox.showerror("DB Error", "Cannot Connect to Database")
             logger.exception("cannot connect to database")

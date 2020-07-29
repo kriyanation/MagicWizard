@@ -844,6 +844,7 @@ class MagicWizard(tk.Toplevel):
 
             cur.execute(sql, self.data_collector)
             connection.commit()
+            connection.close()
         except (sqlite3.OperationalError):
              messagebox.showerror("Error Connecting to DB","Saving the Information met with an error")
              logger.exception("There was an error while saving the record")
